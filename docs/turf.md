@@ -8,19 +8,19 @@ The documentation for the ported functions can be found in the [API docs](api/tu
 
 ## Installation 
 
-![Maven Central](https://img.shields.io/maven-central/v/io.github.dellisd.spatialk/turf)
-![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/io.github.dellisd.spatialk/turf?server=https%3A%2F%2Foss.sonatype.org)
+![Maven Central](https://img.shields.io/maven-central/v/com.dayanruben.spatialk/turf)
+![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.dayanruben.spatialk/turf?server=https%3A%2F%2Foss.sonatype.org)
 
 === "Kotlin"
     ```kotlin
     dependencies {
-    implementation("io.github.dellisd.spatialk:turf:<version>")
+    implementation("com.dayanruben.spatialk:turf:<version>")
     }
     ```
 === "Groovy"
     ```groovy
     dependencies {
-        implementation "io.github.dellisd.spatialk:turf:<version>"
+        implementation "com.dayanruben.spatialk:turf:<version>"
     }
     ```
 
@@ -40,7 +40,7 @@ A list of all turf functions and their current status in the port can be found o
 
 ## Units of Measurement
 
-Units of measurement are represented using the [`Units`](../api/turf/io.github.dellisd.spatialk.turf/-units/) enum. These enum values can be passed into functions to specify the units used by other values passed into the function.
+Units of measurement are represented using the [`Units`](../api/turf/com.dayanruben.spatialk.turf/-units/) enum. These enum values can be passed into functions to specify the units used by other values passed into the function.
 
 === "Kotlin"
     ```kotlin

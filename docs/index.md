@@ -14,8 +14,8 @@ Kotlin DSL for building GeoJson objects.
 
 ```groovy
 dependencies {
-    implementation "io.github.dellisd.spatialk:geojson:<version>"
-    implementation "io.github.dellisd.spatialk:turf:<version>"
+    implementation "com.dayanruben.spatialk:geojson:<version>"
+    implementation "com.dayanruben.spatialk:turf:<version>"
 }
 ```
 
@@ -23,8 +23,8 @@ dependencies {
 ```groovy
 commonMain {
     dependencies {
-        implementation "io.github.dellisd.spatialk:geojson:<version>"
-        implementation "io.github.dellisd.spatialk:turf:<version>"
+        implementation "com.dayanruben.spatialk:geojson:<version>"
+        implementation "com.dayanruben.spatialk:turf:<version>"
     }
 }
 ```

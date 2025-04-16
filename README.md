@@ -4,7 +4,7 @@ Spatial K is a set of libraries for working with geospatial data in Kotlin inclu
 a port of Turfjs written in pure Kotlin. It supports Kotlin Multiplatform and Java projects while also featuring a 
 Kotlin DSL for building GeoJson objects.
 
-See the [project site](https://dellisd.github.io/spatial-k) for more info.
+See the [project site](https://dayanruben.github.io/spatial-k) for more info.
 
 ## Installation
 
@@ -12,8 +12,8 @@ See the [project site](https://dellisd.github.io/spatial-k) for more info.
 
 ```kotlin
 dependencies {
-    implementation("io.github.dellisd.spatialk:geojson:0.3.0")
-    implementation("io.github.dellisd.spatialk:turf:0.3.0")
+    implementation("com.dayanruben.spatialk:geojson:0.3.0")
+    implementation("com.dayanruben.spatialk:turf:0.3.0")
 }
 ```
 
@@ -21,8 +21,8 @@ dependencies {
 ```kotlin
 commonMain {
     dependencies {
-        implementation("io.github.dellisd.spatialk:geojson:0.3.0")
-        implementation("io.github.dellisd.spatialk:turf:0.3.0")
+        implementation("com.dayanruben.spatialk:geojson:0.3.0")
+        implementation("com.dayanruben.spatialk:turf:0.3.0")
     }
 }
 ```

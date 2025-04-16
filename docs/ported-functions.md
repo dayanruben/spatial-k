@@ -2,22 +2,20 @@
 
 The following functions have been ported as of version `0.2.0` of this library.
 
-You can view porting progress for the next release [here](https://github.com/dellisd/spatial-k/milestone/1).
-
 ## Measurement
 
-- [x] [`along`](../api/turf/turf/io.github.dellisd.spatialk.turf/along/)
-- [x] [`area`](../api/turf/turf/io.github.dellisd.spatialk.turf/area/)
-- [x] [`bbox`](../api/turf/turf/io.github.dellisd.spatialk.turf/bbox/)
-- [x] [`bboxPolygon`](../api/turf/turf/io.github.dellisd.spatialk.turf/bbox-polygon/)
-- [x] [`bearing`](../api/turf/turf/io.github.dellisd.spatialk.turf/bearing/)
-- [x] [`center`](../api/turf/turf/io.github.dellisd.spatialk.turf/center/)
+- [x] [`along`](../api/turf/turf/com.dayanruben.spatialk.turf/along/)
+- [x] [`area`](../api/turf/turf/com.dayanruben.spatialk.turf/area/)
+- [x] [`bbox`](../api/turf/turf/com.dayanruben.spatialk.turf/bbox/)
+- [x] [`bboxPolygon`](../api/turf/turf/com.dayanruben.spatialk.turf/bbox-polygon/)
+- [x] [`bearing`](../api/turf/turf/com.dayanruben.spatialk.turf/bearing/)
+- [x] [`center`](../api/turf/turf/com.dayanruben.spatialk.turf/center/)
 - [ ] `centerOfMass`
-- [x] [`destination`](../api/turf/io.github.dellisd.spatialk.turf/destination/)
-- [x] [`distance`](../api/turf/io.github.dellisd.spatialk.turf/distance/)
+- [x] [`destination`](../api/turf/com.dayanruben.spatialk.turf/destination/)
+- [x] [`distance`](../api/turf/com.dayanruben.spatialk.turf/distance/)
 - [ ] `envelope`
-- [x] [`length`](../api/turf/turf/io.github.dellisd.spatialk.turf/length/)
-- [x] [`midpoint`](../api/turf/turf/io.github.dellisd.spatialk.turf/midpoint/)
+- [x] [`length`](../api/turf/turf/com.dayanruben.spatialk.turf/length/)
+- [x] [`midpoint`](../api/turf/turf/com.dayanruben.spatialk.turf/midpoint/)
 - [ ] `pointOnFeature`
 - [ ] `polygonTangents`
 - [ ] `pointToLineDistance`
@@ -71,15 +69,15 @@ Use `round` or `Math.round` from the standard library instead.
 - [ ] `kinks`
 - [ ] `lineArc`
 - [ ] `lineChunk`
-- [x] [`lineIntersect`](../api/turf/turf/io.github.dellisd.spatialk.turf/line-intersect/)
+- [x] [`lineIntersect`](../api/turf/turf/com.dayanruben.spatialk.turf/line-intersect/)
   Partially implemented.
 - [ ] `lineOverlap`
 - [ ] `lineSegment`
-- [x] [`lineSlice`](../api/turf/turf/io.github.dellisd.spatialk.turf/line-slice/)
+- [x] [`lineSlice`](../api/turf/turf/com.dayanruben.spatialk.turf/line-slice/)
 - [ ] `lineSliceAlong`
 - [ ] `lineSplit`
 - [ ] `mask`
-- [x] [`nearestPointOnLine`](../api/turf/turf/io.github.dellisd.spatialk.turf/nearest-point-on-line/)
+- [x] [`nearestPointOnLine`](../api/turf/turf/com.dayanruben.spatialk.turf/nearest-point-on-line/)
 - [ ] `sector`
 - [ ] `shortestPath`
 - [ ] `unkinkPolygon`
@@ -116,7 +114,7 @@ Use the [GeoJson DSL](../geojson/#geojson-dsl) instead.
 
 - [ ] `hexGrid`
 - [ ] `pointGrid`
-- [x] [`squareGrid`](../api/turf/turf/io.github.dellisd.spatialk.turf/squareGrid/)
+- [x] [`squareGrid`](../api/turf/turf/com.dayanruben.spatialk.turf/squareGrid/)
 - [ ] `triangleGrid`
 
 ## Classification
@@ -167,19 +165,19 @@ Use the [GeoJson DSL](../geojson/#geojson-dsl) instead.
 - [ ] `booleanEqual`
 - [ ] `booleanOverlap`
 - [ ] `booleanParallel`
-- [x] [`booleanPointInPolygon`](../api/turf/turf/io.github.dellisd.spatialk.turf/boolean-point-in-polygon/)
+- [x] [`booleanPointInPolygon`](../api/turf/turf/com.dayanruben.spatialk.turf/boolean-point-in-polygon/)
 - [ ] `booleanPointOnLine`
 - [ ] `booleanWithin`
 
 ## Unit Conversion
 
-- [x] [`bearingToAzimuth`](../api/turf/turf/io.github.dellisd.spatialk.turf/bearing-to-azimuth/)
-- [x] [`convertArea`](../api/turf/turf/io.github.dellisd.spatialk.turf/convert-area/)
-- [x] [`convertLength`](../api/turf/turf/io.github.dellisd.spatialk.turf/convert-length/)
+- [x] [`bearingToAzimuth`](../api/turf/turf/com.dayanruben.spatialk.turf/bearing-to-azimuth/)
+- [x] [`convertArea`](../api/turf/turf/com.dayanruben.spatialk.turf/convert-area/)
+- [x] [`convertLength`](../api/turf/turf/com.dayanruben.spatialk.turf/convert-length/)
 - [ ] `degreesToRadians`
-- [x] [`lengthToRadians`](../api/turf/turf/io.github.dellisd.spatialk.turf/length-to-radians/)
-- [x] [`lengthToDegrees`](../api/turf/turf/io.github.dellisd.spatialk.turf/length-to-degrees/)
-- [x] [`radiansToLength`](../api/turf/turf/io.github.dellisd.spatialk.turf/radians-to-length/)
+- [x] [`lengthToRadians`](../api/turf/turf/com.dayanruben.spatialk.turf/length-to-radians/)
+- [x] [`lengthToDegrees`](../api/turf/turf/com.dayanruben.spatialk.turf/length-to-degrees/)
+- [x] [`radiansToLength`](../api/turf/turf/com.dayanruben.spatialk.turf/radians-to-length/)
 - [ ] `radiansToDegrees`
 - [ ] `toMercator`
 - [ ] `toWgs84`

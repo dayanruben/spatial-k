@@ -94,6 +94,7 @@ kotlin {
         mingwTest.dependsOn(nativeCommonTest)
 
         val commonBench by creating {
+            dependsOn(commonMain)
             dependencies {
                 implementation(libs.kotlinx.benchmark)
             }

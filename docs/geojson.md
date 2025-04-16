@@ -6,19 +6,19 @@ See below for constructing GeoJson objects using the DSL.
 
 ## Installation 
 
-![Maven Central](https://img.shields.io/maven-central/v/io.github.dellisd.spatialk/geojson)
-![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/io.github.dellisd.spatialk/geojson?server=https%3A%2F%2Foss.sonatype.org)
+![Maven Central](https://img.shields.io/maven-central/v/com.dayanruben.spatialk/geojson)
+![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.dayanruben.spatialk/geojson?server=https%3A%2F%2Foss.sonatype.org)
 
 === "Kotlin"
     ```kotlin
     dependencies {
-        implementation("io.github.dellisd.spatialk:geojson:<version>")
+        implementation("com.dayanruben.spatialk:geojson:<version>")
     }
     ```
 === "Groovy"
     ```groovy
     dependencies {
-        implementation "io.github.dellisd.spatialk:geojson:<version>"
+        implementation "com.dayanruben.spatialk:geojson:<version>"
     }
     ```
 
