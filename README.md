@@ -12,8 +12,8 @@ See the [project site](https://dayanruben.github.io/spatial-k) for more info.
 
 ```kotlin
 dependencies {
-    implementation("com.dayanruben.spatialk:geojson:0.3.0")
-    implementation("com.dayanruben.spatialk:turf:0.3.0")
+    implementation("com.dayanruben.spatialk:geojson:0.4.0")
+    implementation("com.dayanruben.spatialk:turf:0.4.0")
 }
 ```
 
@@ -21,8 +21,8 @@ dependencies {
 ```kotlin
 commonMain {
     dependencies {
-        implementation("com.dayanruben.spatialk:geojson:0.3.0")
-        implementation("com.dayanruben.spatialk:turf:0.3.0")
+        implementation("com.dayanruben.spatialk:geojson:0.4.0")
+        implementation("com.dayanruben.spatialk:turf:0.4.0")
     }
 }
 ```
