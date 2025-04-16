@@ -4,9 +4,7 @@ import com.dayanruben.spatialk.geojson.BoundingBox
 import com.dayanruben.spatialk.geojson.Feature
 import com.dayanruben.spatialk.geojson.Position
 import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.double
-import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 
 internal fun DoubleArray.jsonJoin(transform: ((Double) -> CharSequence)? = null) =

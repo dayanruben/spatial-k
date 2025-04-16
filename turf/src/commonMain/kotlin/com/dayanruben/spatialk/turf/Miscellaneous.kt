@@ -3,8 +3,8 @@
 package com.dayanruben.spatialk.turf
 
 import com.dayanruben.spatialk.geojson.LineString
-import com.dayanruben.spatialk.geojson.Position
 import com.dayanruben.spatialk.geojson.MultiLineString
+import com.dayanruben.spatialk.geojson.Position
 import kotlin.jvm.JvmName
 import kotlin.math.max
 

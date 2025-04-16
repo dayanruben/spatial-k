@@ -2,9 +2,8 @@ package com.dayanruben.spatialk.geojson.serialization
 
 import com.dayanruben.spatialk.geojson.Feature
 import com.dayanruben.spatialk.geojson.FeatureCollection
-import com.dayanruben.spatialk.geojson.Position
 import com.dayanruben.spatialk.geojson.Point
-import kotlinx.serialization.encodeToString
+import com.dayanruben.spatialk.geojson.Position
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonPrimitive
 import kotlin.test.Test

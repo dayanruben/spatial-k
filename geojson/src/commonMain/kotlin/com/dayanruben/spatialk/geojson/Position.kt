@@ -3,7 +3,6 @@ package com.dayanruben.spatialk.geojson
 import com.dayanruben.spatialk.geojson.serialization.PositionSerializer
 import com.dayanruben.spatialk.geojson.serialization.jsonJoin
 import kotlinx.serialization.Serializable
-import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmSynthetic
 
 /**

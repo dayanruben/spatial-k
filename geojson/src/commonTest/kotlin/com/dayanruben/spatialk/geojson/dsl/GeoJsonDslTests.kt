@@ -1,10 +1,6 @@
 package com.dayanruben.spatialk.geojson.dsl
 
-import com.dayanruben.spatialk.geojson.FeatureCollection
-import com.dayanruben.spatialk.geojson.LineString
-import com.dayanruben.spatialk.geojson.MultiPoint
-import com.dayanruben.spatialk.geojson.Polygon
-import com.dayanruben.spatialk.geojson.Position
+import com.dayanruben.spatialk.geojson.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails

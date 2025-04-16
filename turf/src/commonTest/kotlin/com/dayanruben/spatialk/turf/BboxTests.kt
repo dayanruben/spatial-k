@@ -3,13 +3,7 @@
 package com.dayanruben.spatialk.turf
 
 import com.dayanruben.spatialk.geojson.BoundingBox
-import com.dayanruben.spatialk.geojson.dsl.feature
-import com.dayanruben.spatialk.geojson.dsl.featureCollection
-import com.dayanruben.spatialk.geojson.dsl.lineString
-import com.dayanruben.spatialk.geojson.dsl.multiLineString
-import com.dayanruben.spatialk.geojson.dsl.multiPolygon
-import com.dayanruben.spatialk.geojson.dsl.point
-import com.dayanruben.spatialk.geojson.dsl.polygon
+import com.dayanruben.spatialk.geojson.dsl.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

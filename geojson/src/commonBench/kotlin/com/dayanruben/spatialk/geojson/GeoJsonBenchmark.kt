@@ -6,16 +6,7 @@ import com.dayanruben.spatialk.geojson.dsl.featureCollection
 import com.dayanruben.spatialk.geojson.dsl.lineString
 import com.dayanruben.spatialk.geojson.dsl.point
 import com.dayanruben.spatialk.geojson.dsl.polygon
-import kotlinx.benchmark.Benchmark
-import kotlinx.benchmark.BenchmarkMode
-import kotlinx.benchmark.BenchmarkTimeUnit
-import kotlinx.benchmark.Mode
-import kotlinx.benchmark.OutputTimeUnit
-import kotlinx.benchmark.Scope
-import kotlinx.benchmark.Setup
-import kotlinx.benchmark.State
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
+import kotlinx.benchmark.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlin.random.Random

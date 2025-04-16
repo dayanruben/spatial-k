@@ -2,17 +2,7 @@
 
 package com.dayanruben.spatialk.turf
 
-import com.dayanruben.spatialk.geojson.Feature
-import com.dayanruben.spatialk.geojson.FeatureCollection
-import com.dayanruben.spatialk.geojson.Geometry
-import com.dayanruben.spatialk.geojson.GeometryCollection
-import com.dayanruben.spatialk.geojson.LineString
-import com.dayanruben.spatialk.geojson.MultiLineString
-import com.dayanruben.spatialk.geojson.MultiPoint
-import com.dayanruben.spatialk.geojson.MultiPolygon
-import com.dayanruben.spatialk.geojson.Point
-import com.dayanruben.spatialk.geojson.Polygon
-import com.dayanruben.spatialk.geojson.Position
+import com.dayanruben.spatialk.geojson.*
 import kotlin.jvm.JvmName
 
 @ExperimentalTurfApi

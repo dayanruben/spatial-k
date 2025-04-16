@@ -3,28 +3,11 @@
 
 package com.dayanruben.spatialk.turf
 
-import com.dayanruben.spatialk.geojson.BoundingBox
-import com.dayanruben.spatialk.geojson.Feature
-import com.dayanruben.spatialk.geojson.FeatureCollection
-import com.dayanruben.spatialk.geojson.Geometry
-import com.dayanruben.spatialk.geojson.GeometryCollection
-import com.dayanruben.spatialk.geojson.LineString
-import com.dayanruben.spatialk.geojson.Position
-import com.dayanruben.spatialk.geojson.MultiLineString
-import com.dayanruben.spatialk.geojson.MultiPoint
-import com.dayanruben.spatialk.geojson.MultiPolygon
-import com.dayanruben.spatialk.geojson.Point
-import com.dayanruben.spatialk.geojson.Polygon
+import com.dayanruben.spatialk.geojson.*
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmSynthetic
-import kotlin.math.abs
-import kotlin.math.asin
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Takes a [LineString] and returns a [position][Position] at a specified distance along the line.

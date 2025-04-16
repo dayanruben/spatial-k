@@ -5,11 +5,7 @@ import com.dayanruben.spatialk.geojson.serialization.jsonJoin
 import com.dayanruben.spatialk.geojson.serialization.jsonProp
 import com.dayanruben.spatialk.geojson.serialization.toBbox
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
 import kotlin.jvm.JvmStatic
 
 /**

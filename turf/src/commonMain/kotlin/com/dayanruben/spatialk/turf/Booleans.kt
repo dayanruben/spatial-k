@@ -3,11 +3,7 @@
 
 package com.dayanruben.spatialk.turf
 
-import com.dayanruben.spatialk.geojson.BoundingBox
-import com.dayanruben.spatialk.geojson.MultiPolygon
-import com.dayanruben.spatialk.geojson.Point
-import com.dayanruben.spatialk.geojson.Polygon
-import com.dayanruben.spatialk.geojson.Position
+import com.dayanruben.spatialk.geojson.*
 import kotlin.jvm.JvmOverloads
 
 /**

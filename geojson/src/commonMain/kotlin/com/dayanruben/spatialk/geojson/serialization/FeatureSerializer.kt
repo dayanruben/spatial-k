@@ -5,12 +5,7 @@ import com.dayanruben.spatialk.geojson.serialization.BoundingBoxSerializer.toJso
 import com.dayanruben.spatialk.geojson.serialization.GeometrySerializer.toJsonObject
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.json.JsonDecoder
-import kotlinx.serialization.json.JsonEncoder
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.put
+import kotlinx.serialization.json.*
 
 public object FeatureSerializer : JsonSerializer<Feature> {
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Feature")

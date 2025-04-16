@@ -1,14 +1,6 @@
 package com.dayanruben.spatialk.geojson.serialization
 
-import com.dayanruben.spatialk.geojson.Geometry
-import com.dayanruben.spatialk.geojson.GeometryCollection
-import com.dayanruben.spatialk.geojson.LineString
-import com.dayanruben.spatialk.geojson.MultiLineString
-import com.dayanruben.spatialk.geojson.MultiPoint
-import com.dayanruben.spatialk.geojson.MultiPolygon
-import com.dayanruben.spatialk.geojson.Point
-import com.dayanruben.spatialk.geojson.Polygon
-import com.dayanruben.spatialk.geojson.Position
+import com.dayanruben.spatialk.geojson.*
 import com.dayanruben.spatialk.geojson.serialization.BoundingBoxSerializer.toJsonArray
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
@@ -17,14 +9,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonDecoder
-import kotlinx.serialization.json.JsonEncoder
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.buildJsonArray
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.*
 
 @Suppress("LongMethod")
 public object GeometrySerializer : KSerializer<Geometry> {

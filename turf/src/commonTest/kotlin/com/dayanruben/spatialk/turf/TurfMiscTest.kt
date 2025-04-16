@@ -1,10 +1,6 @@
 package com.dayanruben.spatialk.turf
 
-import com.dayanruben.spatialk.geojson.FeatureCollection
-import com.dayanruben.spatialk.geojson.LineString
-import com.dayanruben.spatialk.geojson.MultiLineString
-import com.dayanruben.spatialk.geojson.Point
-import com.dayanruben.spatialk.geojson.Position
+import com.dayanruben.spatialk.geojson.*
 import com.dayanruben.spatialk.turf.utils.assertDoubleEquals
 import com.dayanruben.spatialk.turf.utils.assertPositionEquals
 import com.dayanruben.spatialk.turf.utils.readResource
