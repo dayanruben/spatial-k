@@ -3,7 +3,7 @@ kotlin = "2.2.0-Beta2"
 resources = "0.10.0"
 benchmark = "0.4.13"
 kotlinx-serialization = "1.8.1"
-maven-publish = "0.31.0"
+maven-publish = "0.32.0"
 dokka = "2.0.0"
 nodejs = "20.10.0"
 
