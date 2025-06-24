@@ -1,14 +1,15 @@
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnvSpec
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsPlugin
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.publish) apply false
     alias(libs.plugins.dokka)
 }
 
-// Configure NodeJS for all projects
-rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
-    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().apply {
-        nodeVersion = "20.10.0"
-        nodeDownloadBaseUrl = "https://nodejs.org/dist"
+rootProject.plugins.withType<NodeJsPlugin> {
+    the<NodeJsEnvSpec>().apply {
+        version.set("20.11.1")
     }
 }
 
