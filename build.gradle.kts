@@ -9,7 +9,7 @@ plugins {
 
 rootProject.plugins.withType<NodeJsPlugin> {
     the<NodeJsEnvSpec>().apply {
-        version.set("20.11.1")
+        version.set("20.19.3")
     }
 }
 
