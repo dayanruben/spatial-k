@@ -55,19 +55,19 @@
 
 ## Feature Conversion
 
-- [ ] `combine`
-- [ ] `explode`
+- [x] [`combine`](../api/turf/org.maplibre.spatialk.turf.featureconversion/combine.html)
+- [x] [`explode`](../api/turf/org.maplibre.spatialk.turf.featureconversion/explode.html)
 - [ ] `flatten`
-- [ ] `lineToPolygon`
+- [x] [`lineToPolygon`](../api/turf/org.maplibre.spatialk.turf.featureconversion/to-polygon.html)
 - [ ] `polygonize`
-- [ ] `polygonToLine`
+- [x] [`polygonToLine`](../api/turf/org.maplibre.spatialk.turf.featureconversion/to-multi-line-string.html)
 
 ## Miscellaneous
 
 - [ ] `kinks`
 - [ ] `lineArc`
 - [ ] `lineChunk`
-- [x] [`lineIntersect`](../api/turf/org.maplibre.spatialk.turf.misc/intersect.html)
+- [ ] [`lineIntersect`](../api/turf/org.maplibre.spatialk.turf.misc/intersect.html)
       Partially implemented.
 - [ ] `lineOverlap`
 - [ ] `lineSegment`
@@ -105,7 +105,7 @@ Use the [GeoJson DSL](../geojson/index.md#geojson-dsl) instead.
 
 ## Joins
 
-- [ ] `pointsWithinPolygon`
+- [x] [`pointsWithinPolygon`](../api/turf/org.maplibre.spatialk.turf.misc/filter-inside.html)
 - [ ] `tag`
 
 ## Grids
@@ -117,7 +117,7 @@ Use the [GeoJson DSL](../geojson/index.md#geojson-dsl) instead.
 
 ## Classification
 
-- [ ] `nearestPoint`
+- [x] [`nearestPoint`](../api/turf/org.maplibre.spatialk.turf.misc/nearest-point-to.html)
 
 ## Aggregation
 
@@ -127,25 +127,8 @@ Use the [GeoJson DSL](../geojson/index.md#geojson-dsl) instead.
 
 ## Meta
 
-- [x] [`coordAll`](../api/turf/org.maplibre.spatialk.turf.meta/flatten-coordinates.html)
-- [ ] `coordEach`
-- [ ] `coordReduce`
-- [ ] `featureEach`
-- [ ] `featureReduce`
-- [ ] `flattenEach`
-- [ ] `flattenReduce`
-- [ ] `getCoord`
-- [ ] `getCoords`
-- [ ] `getGeom`
-- [ ] `getType`
-- [ ] `geomEach`
-- [ ] `geomReduce`
-- [ ] `propEach`
-- [ ] `segmentEach`
-- [ ] `segmentReduce`
-- [ ] `getCluster`
-- [ ] `clusterEach`
-- [ ] `clusterReduce`
+Many GeoJson objects implement `Collection`, enabling standard Kotlin collection
+operations to replace Turf meta functions.
 
 ## Assertations
 
@@ -169,12 +152,8 @@ Use the [GeoJson DSL](../geojson/index.md#geojson-dsl) instead.
 
 ## Unit Conversion
 
-For converting between units of length and area, see the
+For converting between units of length, area, and angle, see the
 [Units](../units/index.md) module.
 
-- [x] [`azimuthToBearing`](../api/turf/org.maplibre.spatialk.turf.unitconversion/azimuth-to-bearing.html)
-- [x] [`bearingToAzimuth`](../api/turf/org.maplibre.spatialk.turf.unitconversion/bearing-to-azimuth.html)
-- [x] [`radiansToDegrees`](../api/turf/org.maplibre.spatialk.turf.unitconversion/radians-to-degrees.html)
-- [x] [`degreesToRadians`](../api/turf/org.maplibre.spatialk.turf.unitconversion/degrees-to-radians.html)
 - [ ] `toMercator`
 - [ ] `toWgs84`

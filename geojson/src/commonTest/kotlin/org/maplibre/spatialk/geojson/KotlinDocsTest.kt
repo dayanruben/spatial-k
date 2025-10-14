@@ -19,7 +19,7 @@ class KotlinDocsTest {
 
     @Test
     fun geometryExhaustiveTypeChecks() {
-        fun getSomeGeometry(): Geometry = point(0.0, 0.0)
+        fun getSomeGeometry(): Geometry = Point(0.0, 0.0)
 
         // --8<-- [start:geometryExhaustiveTypeChecks]
         val geometry: Geometry = getSomeGeometry()
@@ -32,7 +32,7 @@ class KotlinDocsTest {
                 is MultiLineString -> "MultiLineString"
                 is Polygon -> "Polygon"
                 is MultiPolygon -> "MultiPolygon"
-                is GeometryCollection -> "GeometryCollection"
+                is GeometryCollection<*> -> "GeometryCollection"
             }
         // --8<-- [end:geometryExhaustiveTypeChecks]
     }
@@ -299,9 +299,8 @@ class KotlinDocsTest {
                 val point = Point(Position(-75.0, 45.0))
                 val feature = Feature(point, properties = buildJsonObject { put("size", 9999) })
 
-                val size: Number? =
-                    feature.properties?.get("size")?.jsonPrimitive?.doubleOrNull // 9999
-                val geometry: Point? = feature.geometry
+                val size: Number? = feature.properties["size"]?.jsonPrimitive?.doubleOrNull // 9999
+                val geometry: Point = feature.geometry
                 // --8<-- [end:featureKt]
 
                 feature.toJson()
@@ -330,7 +329,7 @@ class KotlinDocsTest {
             kotlin = {
                 // --8<-- [start:featureCollectionKt]
                 val point = Point(Position(-75.0, 45.0))
-                val pointFeature = Feature(point)
+                val pointFeature = Feature(point, null)
                 val featureCollection = FeatureCollection(pointFeature)
 
                 featureCollection.forEach { feature ->
@@ -351,7 +350,8 @@ class KotlinDocsTest {
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [-75.0, 45.0]
-                            }
+                            },
+                            "properties":null
                         }
                     ]
                 }
@@ -383,7 +383,7 @@ class KotlinDocsTest {
     fun serializationToJsonExample() {
         // --8<-- [start:serializationToJson]
         val point = Point(Position(-75.0, 45.0))
-        val feature = Feature(point)
+        val feature = Feature(point, null)
         val featureCollection = FeatureCollection(feature)
 
         val json = featureCollection.toJson()
@@ -412,10 +412,9 @@ class KotlinDocsTest {
     @Test
     fun kotlinxSerializationExample() {
         // --8<-- [start:kotlinxSerialization]
-        @OptIn(SensitiveGeoJsonApi::class)
-        val feature: Feature<*> =
+        val feature: Feature<*, *> =
             GeoJson.jsonFormat.decodeFromString(
-                serializer<Feature<Geometry>>(),
+                serializer<Feature<Geometry, JsonObject?>>(),
                 """
                 {
                     "type": "Feature",
@@ -433,64 +432,15 @@ class KotlinDocsTest {
     }
 
     @Test
-    fun dslLngLatExample() {
-        kotlinAndJsonExample(
-            kotlin = {
-                // --8<-- [start:dslLngLatKt]
-                val position = lngLat(longitude = -75.0, latitude = 45.0)
-                // --8<-- [end:dslLngLatKt]
-
-                position.toJson()
-            },
-            json =
-                """
-                // --8<-- [start:dslLngLatJson]
-                [-75.0, 45.0]
-                // --8<-- [end:dslLngLatJson]
-            """,
-        )
-
-        assertFailsWith<IllegalArgumentException> {
-            // --8<-- [start:dslLngLatException]
-            // Throws exception!!
-            lngLat(longitude = -565.0, latitude = 45.0)
-            // --8<-- [end:dslLngLatException]
-        }
-    }
-
-    @Test
-    fun dslPointExample() {
-        kotlinAndJsonExample(
-            kotlin = {
-                // --8<-- [start:dslPointKt]
-                val point = point(longitude = -75.0, latitude = 45.0, altitude = 100.0)
-                // --8<-- [end:dslPointKt]
-
-                point.toJson()
-            },
-            json =
-                """
-                // --8<-- [start:dslPointJson]
-                {
-                  "type": "Point",
-                  "coordinates": [-75.0, 45.0, 100.0]
-                }
-                // --8<-- [end:dslPointJson]
-            """,
-        )
-    }
-
-    @Test
     fun dslMultiPointExample() {
         kotlinAndJsonExample(
             kotlin = {
                 // --8<-- [start:dslMultiPointKt]
                 val myPoint = Point(88.0, 34.0)
-                val multiPoint = multiPoint {
-                    point(-75.0, 45.0)
-
-                    +lngLat(-78.0, 44.0)
-                    +myPoint
+                val multiPoint = buildMultiPoint {
+                    add(-75.0, 45.0)
+                    add(Position(-78.0, 44.0))
+                    add(myPoint)
                 }
                 // --8<-- [end:dslMultiPointKt]
 
@@ -517,9 +467,9 @@ class KotlinDocsTest {
         kotlinAndJsonExample(
             kotlin = {
                 // --8<-- [start:dslLineStringKt]
-                val lineString = lineString {
-                    point(45.0, 45.0)
-                    point(0.0, 0.0)
+                val lineString = buildLineString {
+                    add(45.0, 45.0)
+                    add(0.0, 0.0)
                 }
                 // --8<-- [end:dslLineStringKt]
 
@@ -542,18 +492,18 @@ class KotlinDocsTest {
         kotlinAndJsonExample(
             kotlin = {
                 // --8<-- [start:dslMultiLineStringKt]
-                val simpleLine = lineString {
-                    point(45.0, 45.0)
-                    point(0.0, 0.0)
+                val simpleLine = buildLineString {
+                    add(45.0, 45.0)
+                    add(0.0, 0.0)
                 }
 
-                val multiLineString = multiLineString {
-                    +simpleLine
+                val multiLineString = buildMultiLineString {
+                    add(simpleLine)
 
                     // Inline LineString creation
-                    lineString {
-                        point(44.4, 55.5)
-                        point(55.5, 66.6)
+                    addLineString {
+                        add(44.4, 55.5)
+                        add(55.5, 66.6)
                     }
                 }
                 // --8<-- [end:dslMultiLineStringKt]
@@ -580,23 +530,22 @@ class KotlinDocsTest {
         kotlinAndJsonExample(
             kotlin = {
                 // --8<-- [start:dslPolygonKt]
-                val simpleLine = lineString {
-                    point(45.0, 45.0)
-                    point(0.0, 0.0)
+                val simpleLine = buildLineString {
+                    add(45.0, 45.0)
+                    add(0.0, 0.0)
                 }
 
-                val polygon = polygon {
-                    ring {
+                val polygon = buildPolygon {
+                    addRing {
                         // LineStrings can be used as part of a ring
-                        +simpleLine
-                        point(12.0, 12.0)
-                        complete()
+                        add(Position(45.0, 45.0))
+                        add(Position(0.0, 0.0))
+                        add(12.0, 12.0)
                     }
-                    ring {
-                        point(4.0, 4.0)
-                        point(2.0, 2.0)
-                        point(3.0, 3.0)
-                        complete()
+                    addRing {
+                        add(4.0, 4.0)
+                        add(2.0, 2.0)
+                        add(3.0, 3.0)
                     }
                 }
                 // --8<-- [end:dslPolygonKt]
@@ -623,30 +572,27 @@ class KotlinDocsTest {
         kotlinAndJsonExample(
             kotlin = {
                 // --8<-- [start:dslMultiPolygonKt]
-                val simplePolygon = polygon {
-                    ring {
-                        point(45.0, 45.0)
-                        point(0.0, 0.0)
-                        point(12.0, 12.0)
-                        complete()
+                val simplePolygon = buildPolygon {
+                    addRing {
+                        add(45.0, 45.0)
+                        add(0.0, 0.0)
+                        add(12.0, 12.0)
                     }
-                    ring {
-                        point(4.0, 4.0)
-                        point(2.0, 2.0)
-                        point(3.0, 3.0)
-                        complete()
+                    addRing {
+                        add(4.0, 4.0)
+                        add(2.0, 2.0)
+                        add(3.0, 3.0)
                     }
                 }
 
-                val multiPolygon = multiPolygon {
-                    +simplePolygon
-                    polygon {
-                        ring {
-                            point(12.0, 0.0)
-                            point(0.0, 12.0)
-                            point(-12.0, 0.0)
-                            point(5.0, 5.0)
-                            complete()
+                val multiPolygon = buildMultiPolygon {
+                    add(simplePolygon)
+                    addPolygon {
+                        addRing {
+                            add(12.0, 0.0)
+                            add(0.0, 12.0)
+                            add(-12.0, 0.0)
+                            add(5.0, 5.0)
                         }
                     }
                 }
@@ -678,30 +624,28 @@ class KotlinDocsTest {
         kotlinAndJsonExample(
             kotlin = {
                 // --8<-- [start:dslGeometryCollectionKt]
-                val simplePoint = point(-75.0, 45.0, 100.0)
-                val simpleLine = lineString {
-                    point(45.0, 45.0)
-                    point(0.0, 0.0)
+                val simplePoint = Point(-75.0, 45.0, 100.0)
+                val simpleLine = buildLineString {
+                    add(45.0, 45.0)
+                    add(0.0, 0.0)
                 }
-                val simplePolygon = polygon {
-                    ring {
-                        point(45.0, 45.0)
-                        point(0.0, 0.0)
-                        point(12.0, 12.0)
-                        complete()
+                val simplePolygon = buildPolygon {
+                    addRing {
+                        add(45.0, 45.0)
+                        add(0.0, 0.0)
+                        add(12.0, 12.0)
                     }
-                    ring {
-                        point(4.0, 4.0)
-                        point(2.0, 2.0)
-                        point(3.0, 3.0)
-                        complete()
+                    addRing {
+                        add(4.0, 4.0)
+                        add(2.0, 2.0)
+                        add(3.0, 3.0)
                     }
                 }
 
-                val geometryCollection = geometryCollection {
-                    +simplePoint
-                    +simpleLine
-                    +simplePolygon
+                val geometryCollection = buildGeometryCollection {
+                    add(simplePoint)
+                    add(simpleLine)
+                    add(simplePolygon)
                 }
                 // --8<-- [end:dslGeometryCollectionKt]
 
@@ -724,8 +668,8 @@ class KotlinDocsTest {
                     {
                       "type": "Polygon",
                       "coordinates": [
-                      [[45.0, 45.0], [0.0, 0.0], [12.0, 12.0], [45.0, 45.0]],
-                      [[4.0, 4.0], [2.0, 2.0], [3.0, 3.0], [4.0, 4.0]]
+                        [[45.0, 45.0], [0.0, 0.0], [12.0, 12.0], [45.0, 45.0]],
+                        [[4.0, 4.0], [2.0, 2.0], [3.0, 3.0], [4.0, 4.0]]
                       ]
                     }
                   ]
@@ -741,14 +685,14 @@ class KotlinDocsTest {
             kotlin = {
                 // --8<-- [start:dslFeatureKt]
                 val feature =
-                    feature(
-                        geometry = point(-75.0, 45.0),
-                        id = "point1",
-                        bbox = BoundingBox(-76.9, 44.1, -74.2, 45.7),
-                    ) {
-                        put("name", "Hello World")
-                        put("value", 13)
-                        put("cool", true)
+                    buildFeature(geometry = Point(-75.0, 45.0)) {
+                        id = "point1"
+                        bbox = BoundingBox(-76.9, 44.1, -74.2, 45.7)
+                        properties = buildJsonObject {
+                            put("name", "Hello World")
+                            put("value", 13)
+                            put("cool", true)
+                        }
                     }
                 // --8<-- [end:dslFeatureKt]
 
@@ -781,7 +725,12 @@ class KotlinDocsTest {
         kotlinAndJsonExample(
             kotlin = {
                 // --8<-- [start:dslFeatureCollectionKt]
-                val featureCollection = featureCollection { feature(geometry = point(-75.0, 45.0)) }
+                val featureCollection = buildFeatureCollection {
+                    addFeature {
+                        geometry = Point(-75.0, 45.0)
+                        properties = buildJsonObject { put("name", "Hello") }
+                    }
+                }
                 // --8<-- [end:dslFeatureCollectionKt]
 
                 featureCollection.toJson()
@@ -797,6 +746,9 @@ class KotlinDocsTest {
                       "geometry": {
                         "type": "Point",
                         "coordinates": [-75.0, 45.0]
+                      },
+                      "properties": {
+                        "name": "Hello"
                       }
                     }
                   ]

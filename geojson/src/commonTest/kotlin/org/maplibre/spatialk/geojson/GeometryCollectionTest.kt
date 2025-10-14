@@ -5,7 +5,12 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import org.maplibre.spatialk.geojson.dsl.buildGeometryCollection
+import org.maplibre.spatialk.geojson.dsl.geometryCollectionOf
+import org.maplibre.spatialk.geojson.dsl.lineStringOf
+import org.maplibre.spatialk.geojson.dsl.multiPointOf
 import org.maplibre.spatialk.geojson.utils.DELTA
+import org.maplibre.spatialk.geojson.utils.assertJsonEquals
 
 class GeometryCollectionTest {
 
@@ -85,10 +90,10 @@ class GeometryCollectionTest {
     @Test
     fun passingInSingleGeometry_doesHandleCorrectly() {
         val geometry = Point(1.0, 2.0)
-        val collection = GeometryCollection(listOf(geometry))
+        val collection = geometryCollectionOf(geometry)
         assertNotNull(collection)
         assertEquals(1, collection.geometries.size)
-        assertEquals(2.0, (collection.geometries.first() as Point).coordinates.latitude, DELTA)
+        assertEquals(2.0, collection.geometries.first().coordinates.latitude, DELTA)
     }
 
     @Test
@@ -196,5 +201,113 @@ class GeometryCollectionTest {
         val actualGeometryCollection = GeometryCollection.fromJson(geometryCollection.toJson())
         val expectedGeometryCollection = GeometryCollection.fromJson(jsonOriginal)
         assertEquals(expectedGeometryCollection, actualGeometryCollection)
+    }
+
+    @Test
+    fun wrongType() {
+        assertNull(
+            GeometryCollection.fromJsonOrNull(
+                """
+            {
+                "type": "FakeGeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [1.0, 2.0]
+                    },
+                    {
+                        "type": "LineString",
+                        "coordinates": [
+                            [1.0, 2.0],
+                            [2.0, 3.0]
+                        ]
+                    }
+                ]
+            }
+            """
+            )
+        )
+    }
+
+    @Test
+    fun missingType() {
+        assertNull(
+            GeometryCollection.fromJsonOrNull(
+                """
+            {
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [1.0, 2.0]
+                    },
+                    {
+                        "type": "LineString",
+                        "coordinates": [
+                            [1.0, 2.0],
+                            [2.0, 3.0]
+                        ]
+                    }
+                ]
+            }
+            """
+            )
+        )
+    }
+
+    @Test
+    fun testEmptyCollection() {
+        val json = "{\"type\": \"GeometryCollection\", \"geometries\": []}"
+        val gc = geometryCollectionOf<Geometry>()
+        assertEquals(gc, GeometryCollection.fromJsonOrNull<Geometry>(json))
+        assertJsonEquals(json, gc.toJson())
+    }
+
+    @Test
+    fun testMixedCollection() {
+        val json =
+            """
+            {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {"type": "Point", "coordinates": [1.1, 2.2]},
+                    {"type": "LineString", "coordinates": [[1.1, 2.2], [3.3, 4.4]]}
+                ]
+            }
+            """
+
+        val gc = buildGeometryCollection {
+            add(Point(1.1, 2.2))
+            add(lineStringOf(Position(1.1, 2.2), Position(3.3, 4.4)))
+        }
+
+        assertEquals(gc, GeometryCollection.fromJsonOrNull<Geometry>(json))
+        assertNull(GeometryCollection.fromJsonOrNull<Point>(json))
+
+        assertJsonEquals(json, gc.toJson())
+    }
+
+    @Test
+    fun testHomogenousCollection() {
+        val json =
+            """
+            {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {"type": "MultiPoint", "coordinates": [[1.1, 2.2], [1.1, 2.2]]},
+                    {"type": "MultiPoint", "coordinates": [[3.3, 4.4], [3.3, 4.4]]}
+                ]
+            }
+            """
+
+        val gc = buildGeometryCollection {
+            add(multiPointOf(Position(1.1, 2.2), Position(1.1, 2.2)))
+            add(multiPointOf(Position(3.3, 4.4), Position(3.3, 4.4)))
+        }
+
+        assertEquals(gc, GeometryCollection.fromJsonOrNull<Geometry>(json))
+        assertEquals(gc, GeometryCollection.fromJsonOrNull<MultiPoint>(json))
+        assertNull(GeometryCollection.fromJsonOrNull<LineString>(json))
+
+        assertJsonEquals(json, gc.toJson())
     }
 }

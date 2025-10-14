@@ -1,7 +1,9 @@
 package org.maplibre.spatialk.turf.misc
 
 import kotlin.test.Test
+import kotlinx.serialization.json.JsonObject
 import org.maplibre.spatialk.geojson.FeatureCollection
+import org.maplibre.spatialk.geojson.Geometry
 import org.maplibre.spatialk.geojson.LineString
 import org.maplibre.spatialk.geojson.Point
 import org.maplibre.spatialk.testutil.assertPositionEquals
@@ -11,7 +13,10 @@ class LineSliceTest {
 
     @Test
     fun testLineSlice() {
-        val features = FeatureCollection.fromJson(readResourceFile("misc/lineSlice/route.json"))
+        val features =
+            FeatureCollection.fromJson<Geometry?, JsonObject?>(
+                readResourceFile("misc/lineSlice/route.json")
+            )
         val slice = LineString.fromJson(readResourceFile("misc/lineSlice/slice.json"))
 
         val (lineString, start, stop) = features.features

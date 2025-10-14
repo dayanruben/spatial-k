@@ -2,90 +2,89 @@ package org.maplibre.spatialk.geojson.dsl
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
-import kotlinx.serialization.json.put
 import org.maplibre.spatialk.geojson.FeatureCollection
+import org.maplibre.spatialk.geojson.Geometry
 import org.maplibre.spatialk.geojson.LineString
 import org.maplibre.spatialk.geojson.MultiPoint
+import org.maplibre.spatialk.geojson.Point
 import org.maplibre.spatialk.geojson.Polygon
 import org.maplibre.spatialk.geojson.Position
 
 class GeoJsonDslTests {
 
-    private val collectionDsl = featureCollection {
-        val simplePoint = point(-75.0, 45.0, 100.0)
+    private val collectionDsl = buildFeatureCollection {
+        val simplePoint = Point(-75.0, 45.0, 100.0)
+
         // Point
-        feature(geometry = simplePoint, id = "point1") { put("name", "Hello World") }
+        addFeature(simplePoint) {
+            id = "point1"
+            properties = mapOf("name" to "Hello World")
+        }
+
         // MultiPoint
-        feature(
-            geometry =
-                multiPoint {
-                    +simplePoint
-                    +Position(45.0, 45.0)
-                    +Position(0.0, 0.0)
-                }
+        addFeature(
+            buildMultiPoint {
+                add(simplePoint)
+                add(Position(45.0, 45.0))
+                add(Position(0.0, 0.0))
+            }
         )
 
-        val simpleLine = lineString {
-            +Position(45.0, 45.0)
-            +Position(0.0, 0.0)
+        val simpleLine = buildLineString {
+            add(Position(45.0, 45.0))
+            add(Position(0.0, 0.0))
         }
 
         // LineString
-        feature(geometry = simpleLine)
+        addFeature(simpleLine)
 
         // MultiLineString
-        feature(
-            geometry =
-                multiLineString {
-                    +simpleLine
-                    lineString {
-                        +Position(44.4, 55.5)
-                        +Position(55.5, 66.6)
-                    }
+        addFeature(
+            buildMultiLineString {
+                add(simpleLine)
+                addLineString {
+                    add(Position(44.4, 55.5))
+                    add(Position(55.5, 66.6))
                 }
+            }
         )
 
-        val simplePolygon = polygon {
-            ring {
-                +simpleLine
-                point(12.0, 12.0)
-                complete()
+        val simplePolygon = buildPolygon {
+            addRing {
+                add(Position(45.0, 45.0))
+                add(Position(0.0, 0.0))
+                add(12.0, 12.0)
             }
-            ring {
-                point(4.0, 4.0)
-                point(2.0, 2.0)
-                point(3.0, 3.0)
-                complete()
+            addRing {
+                add(4.0, 4.0)
+                add(2.0, 2.0)
+                add(3.0, 3.0)
             }
         }
 
         // Polygon
-        feature(geometry = simplePolygon)
+        addFeature(simplePolygon)
 
-        feature(
-            geometry =
-                multiPolygon {
-                    +simplePolygon
-                    polygon {
-                        ring {
-                            point(12.0, 0.0)
-                            point(0.0, 12.0)
-                            point(-12.0, 0.0)
-                            point(5.0, 5.0)
-                            complete()
-                        }
+        addFeature(
+            buildMultiPolygon {
+                add(simplePolygon)
+                addPolygon {
+                    addRing {
+                        add(12.0, 0.0)
+                        add(0.0, 12.0)
+                        add(-12.0, 0.0)
+                        add(5.0, 5.0)
                     }
                 }
+            }
         )
 
-        feature(
-            geometry =
-                geometryCollection {
-                    +simplePoint
-                    +simpleLine
-                    +simplePolygon
-                }
+        addFeature(
+            buildGeometryCollection {
+                add(simplePoint)
+                add(simpleLine)
+                add(simplePolygon)
+            }
         )
     }
 
@@ -93,45 +92,41 @@ class GeoJsonDslTests {
         """
         |{"type":"FeatureCollection","features":[
         |{"type":"Feature","geometry":{"type":"Point","coordinates":[-75.0,45.0,100.0]},"properties":{"name":"Hello World"},"id":"point1"},
-        |{"type":"Feature","geometry":{"type":"MultiPoint","coordinates":[[-75.0,45.0,100.0],[45.0,45.0],[0.0,0.0]]}},
-        |{"type":"Feature","geometry":{"type":"LineString","coordinates":[[45.0,45.0],[0.0,0.0]]}},
-        |{"type":"Feature","geometry":{"type":"MultiLineString","coordinates":[[[45.0,45.0],[0.0,0.0]],[[44.4,55.5],[55.5,66.6]]]}},
-        |{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[45.0,45.0],[0.0,0.0],[12.0,12.0],[45.0,45.0]],[[4.0,4.0],[2.0,2.0],[3.0,3.0],[4.0,4.0]]]}},
-        |{"type":"Feature","geometry":{"type":"MultiPolygon","coordinates":[[[[45.0,45.0],[0.0,0.0],[12.0,12.0],[45.0,45.0]],[[4.0,4.0],[2.0,2.0],[3.0,3.0],[4.0,4.0]]],[[[12.0,0.0],[0.0,12.0],[-12.0,0.0],[5.0,5.0],[12.0,0.0]]]]}},
+        |{"type":"Feature","geometry":{"type":"MultiPoint","coordinates":[[-75.0,45.0,100.0],[45.0,45.0],[0.0,0.0]]},"properties":null},
+        |{"type":"Feature","geometry":{"type":"LineString","coordinates":[[45.0,45.0],[0.0,0.0]]},"properties":null},
+        |{"type":"Feature","geometry":{"type":"MultiLineString","coordinates":[[[45.0,45.0],[0.0,0.0]],[[44.4,55.5],[55.5,66.6]]]},"properties":null},
+        |{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[45.0,45.0],[0.0,0.0],[12.0,12.0],[45.0,45.0]],[[4.0,4.0],[2.0,2.0],[3.0,3.0],[4.0,4.0]]]},"properties":null},
+        |{"type":"Feature","geometry":{"type":"MultiPolygon","coordinates":[[[[45.0,45.0],[0.0,0.0],[12.0,12.0],[45.0,45.0]],[[4.0,4.0],[2.0,2.0],[3.0,3.0],[4.0,4.0]]],[[[12.0,0.0],[0.0,12.0],[-12.0,0.0],[5.0,5.0],[12.0,0.0]]]]},"properties":null},
         |{"type":"Feature","geometry":{"type":"GeometryCollection","geometries":[
         |{"type":"Point","coordinates":[-75.0,45.0,100.0]},
         |{"type":"LineString","coordinates":[[45.0,45.0],[0.0,0.0]]},
-        |{"type":"Polygon","coordinates":[[[45.0,45.0],[0.0,0.0],[12.0,12.0],[45.0,45.0]],[[4.0,4.0],[2.0,2.0],[3.0,3.0],[4.0,4.0]]]}]}}
+        |{"type":"Polygon","coordinates":[[[45.0,45.0],[0.0,0.0],[12.0,12.0],[45.0,45.0]],[[4.0,4.0],[2.0,2.0],[3.0,3.0],[4.0,4.0]]]}]},"properties":null}
         |]}"""
             .trimMargin()
 
     @Test
     fun testDslConstruction() {
-        assertEquals(FeatureCollection.fromJson(collectionJson), collectionDsl)
-    }
-
-    @Test
-    fun testLngLatRequirements() {
-        assertFails { lngLat(-200.0, 50.0) }
-        assertFails { lngLat(0.0, 99.0) }
-        assertFails { lngLat(500.0, -180.0) }
+        assertEquals(
+            FeatureCollection.fromJson<Geometry?, Map<String, String>?>(collectionJson),
+            collectionDsl,
+        )
     }
 
     @Test
     fun testNoInlinePositionRequirements() {
         assertEquals(
             MultiPoint(Position(-200.0, 0.0), Position(200.0, 99.0)),
-            multiPoint {
-                point(-200.0, 0.0)
-                point(200.0, 99.0)
+            buildMultiPoint {
+                add(-200.0, 0.0)
+                add(200.0, 99.0)
             },
         )
 
         assertEquals(
             LineString(Position(-200.0, 0.0), Position(200.0, 99.0)),
-            lineString {
-                point(-200.0, 0.0)
-                point(200.0, 99.0)
+            buildLineString {
+                add(-200.0, 0.0)
+                add(200.0, 99.0)
             },
         )
 
@@ -144,12 +139,11 @@ class GeoJsonDslTests {
                     Position(-200.0, 0.0),
                 )
             ),
-            polygon {
-                ring {
-                    point(-200.0, 0.0)
-                    point(200.0, 99.0)
-                    point(500.0, 99.0)
-                    complete()
+            buildPolygon {
+                addRing {
+                    add(-200.0, 0.0)
+                    add(200.0, 99.0)
+                    add(500.0, 99.0)
                 }
             },
         )

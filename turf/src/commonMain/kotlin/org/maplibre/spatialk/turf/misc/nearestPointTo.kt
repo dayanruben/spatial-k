@@ -7,12 +7,25 @@ import kotlin.jvm.JvmMultifileClass
 import kotlin.jvm.JvmName
 import org.maplibre.spatialk.geojson.LineString
 import org.maplibre.spatialk.geojson.MultiLineString
+import org.maplibre.spatialk.geojson.Point
 import org.maplibre.spatialk.geojson.Position
 import org.maplibre.spatialk.turf.measurement.bearingTo
 import org.maplibre.spatialk.turf.measurement.distance
 import org.maplibre.spatialk.turf.measurement.offset
 import org.maplibre.spatialk.units.Length
 import org.maplibre.spatialk.units.LengthUnit
+import org.maplibre.spatialk.units.extensions.degrees
+
+/**
+ * Finds the nearest point in the collection to the given position.
+ *
+ * @param point The position to find the nearest point to.
+ * @return The [Point] in the collection that is closest to the given position.
+ * @throws NoSuchElementException if the collection is empty.
+ */
+public fun Collection<Point>.nearestPointTo(point: Position): Point = minBy {
+    distance(it.coordinates, point)
+}
 
 /**
  * Result values from [findNearestPointOnLine].
@@ -38,7 +51,7 @@ public data class NearestPointOnLineResult(
 }
 
 /**
- * Finds the closest [Position] along a [LineString] to a given position
+ * Finds the closest [Position] along a [LineString] to a given position.
  *
  * @param point The [Position] given to find the closest point along the [LineString]
  * @return The closest position along the line
@@ -47,7 +60,7 @@ public fun LineString.nearestPointTo(point: Position): NearestPointOnLineResult 
     findNearestPointOnLine(listOf(coordinates), point)
 
 /**
- * Finds the closest [Position] along a [MultiLineString] to a given position
+ * Finds the closest [Position] along a [MultiLineString] to a given position.
  *
  * @param point The [Position] given to find the closest point along the [MultiLineString]
  * @return The closest position along the lines
@@ -80,8 +93,8 @@ private fun findNearestPointOnLine(
 
             val heightDistance = maxOf(startDistance, stopDistance)
             val direction = start.bearingTo(stop)
-            val perpPoint1 = point.offset(heightDistance, direction + 90)
-            val perpPoint2 = point.offset(heightDistance, direction - 90)
+            val perpPoint1 = point.offset(heightDistance, direction + 90.degrees)
+            val perpPoint2 = point.offset(heightDistance, direction - 90.degrees)
 
             val intersect =
                 intersect(LineString(perpPoint1, perpPoint2), LineString(start, stop)).getOrNull(0)

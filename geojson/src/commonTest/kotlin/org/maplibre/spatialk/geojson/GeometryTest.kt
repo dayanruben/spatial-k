@@ -9,7 +9,7 @@ import org.maplibre.spatialk.geojson.utils.DELTA
 class GeometryTest {
 
     @Test
-    fun fromJson() {
+    fun geometryCollectionFromJson() {
         val json =
             """
             {
@@ -32,7 +32,7 @@ class GeometryTest {
                 .trimIndent()
 
         val geometry = Geometry.fromJson(json)
-        assertTrue(geometry is GeometryCollection)
+        assertTrue(geometry is GeometryCollection<*>)
     }
 
     @Test
@@ -140,5 +140,17 @@ class GeometryTest {
             )
 
         assertEquals(expectedLineString, actualLineString)
+    }
+
+    @Test
+    fun polymorphicRoundTrip() {
+        val geometry: Geometry =
+            LineString(
+                listOf(Position(1.0, 2.0), Position(2.0, 3.0), Position(3.0, 4.0)),
+                BoundingBox(1.0, 2.0, 3.0, 4.0),
+            )
+        val json = GeoJson.encodeToString(geometry)
+        val actualGeometry = GeoJson.decodeFromString<Geometry>(json)
+        assertEquals(geometry, actualGeometry)
     }
 }

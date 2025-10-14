@@ -22,15 +22,15 @@ import org.maplibre.spatialk.units.extensions.toLength
  * @param bbox [BoundingBox] bbox extent
  * @param cellWidth of each cell
  * @param cellHeight of each cell
- * @return a [FeatureCollection] grid of polygons
+ * @return a [GeometryCollection] grid of polygons
  */
 @JvmSynthetic
 public fun squareGrid(
     bbox: BoundingBox,
     cellWidth: Length,
     cellHeight: Length = cellWidth,
-): FeatureCollection {
-    val featureList = mutableListOf<Feature<Polygon>>()
+): MultiPolygon {
+    val polygons = mutableListOf<List<List<Position>>>()
     val west = bbox.southwest.longitude
     val south = bbox.southwest.latitude
     val east = bbox.northeast.longitude
@@ -60,14 +60,12 @@ public fun squareGrid(
                     add(Position(currentX + cellWidthDeg, currentY))
                     add(Position(currentX, currentY))
                 }
-            mutableListOf<List<Position>>()
-                .apply { add(positions) }
-                .also { featureList.add(Feature(Polygon(it))) }
+            mutableListOf<List<Position>>().apply { add(positions) }.also { polygons.add(it) }
             currentY += cellHeightDeg
         }
         currentX += cellWidthDeg
     }
-    return FeatureCollection(featureList)
+    return MultiPolygon(polygons)
 }
 
 @PublishedApi
@@ -78,4 +76,4 @@ internal fun squareGrid(
     cellWidth: Double,
     cellHeight: Double = cellWidth,
     unit: LengthUnit = Meters,
-): FeatureCollection = squareGrid(bbox, cellWidth.toLength(unit), cellHeight.toLength(unit))
+): MultiPolygon = squareGrid(bbox, cellWidth.toLength(unit), cellHeight.toLength(unit))

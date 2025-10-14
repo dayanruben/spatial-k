@@ -11,68 +11,70 @@ import kotlinx.benchmark.Setup
 import kotlinx.benchmark.State
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
-import org.maplibre.spatialk.geojson.dsl.featureCollection
-import org.maplibre.spatialk.geojson.dsl.lineString
-import org.maplibre.spatialk.geojson.dsl.point
-import org.maplibre.spatialk.geojson.dsl.polygon
+import org.maplibre.spatialk.geojson.dsl.addFeature
+import org.maplibre.spatialk.geojson.dsl.addRing
+import org.maplibre.spatialk.geojson.dsl.buildFeatureCollection
+import org.maplibre.spatialk.geojson.dsl.buildLineString
+import org.maplibre.spatialk.geojson.dsl.buildPolygon
 
 @State(Scope.Benchmark)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(BenchmarkTimeUnit.MILLISECONDS)
 open class GeoJsonBenchmark {
-    private lateinit var featureCollection: FeatureCollection
+    private lateinit var featureCollection: FeatureCollection<Geometry?, JsonObject?>
     private lateinit var jsonString: String
     private lateinit var jsonObject: JsonObject
 
-    private fun generateDataset(): FeatureCollection {
-        val random = Random(0)
-        return featureCollection {
-            repeat(5000) {
-                feature(
-                    geometry = point(random.nextDouble(360.0) - 180, random.nextDouble(360.0) - 180)
-                )
-            }
+    private val random = Random(0)
 
-            repeat(5000) {
-                feature(
-                    geometry =
-                        lineString {
-                            repeat(10) {
-                                +Position(
-                                    random.nextDouble(360.0) - 180,
-                                    random.nextDouble(360.0) - 180,
+    private fun generateDataset() = buildFeatureCollection {
+        repeat(5000) {
+            addFeature(
+                geometry =
+                    Point(
+                        longitude = random.nextDouble(360.0) - 180,
+                        latitude = random.nextDouble(360.0) - 180,
+                    )
+            )
+        }
+
+        repeat(5000) {
+            addFeature(
+                geometry =
+                    buildLineString {
+                        repeat(10) {
+                            add(
+                                longitude = random.nextDouble(360.0) - 180,
+                                latitude = random.nextDouble(360.0) - 180,
+                            )
+                        }
+                    }
+            )
+        }
+
+        repeat(5000) {
+            addFeature(
+                geometry =
+                    buildPolygon {
+                        addRing {
+                            add(
+                                longitude = random.nextDouble(360.0) - 180,
+                                latitude = random.nextDouble(360.0) - 180,
+                                altitude = random.nextDouble(100.0),
+                            )
+                            repeat(8) {
+                                add(
+                                    longitude = random.nextDouble(360.0) - 180,
+                                    latitude = random.nextDouble(360.0) - 180,
+                                    altitude = random.nextDouble(100.0),
                                 )
                             }
                         }
-                )
-            }
-
-            repeat(5000) {
-                feature(
-                    geometry =
-                        polygon {
-                            ring {
-                                val start =
-                                    Position(
-                                        random.nextDouble(360.0) - 180,
-                                        random.nextDouble(360.0) - 180,
-                                        random.nextDouble(100.0),
-                                    )
-                                +start
-                                repeat(8) {
-                                    +Position(
-                                        random.nextDouble(360.0) - 180,
-                                        random.nextDouble(360.0) - 180,
-                                        random.nextDouble(100.0),
-                                    )
-                                }
-                                +start
-                            }
-                        }
-                ) {
-                    put("example", "value")
-                }
+                    }
+            ) {
+                properties = buildJsonObject { put("example", "value") }
             }
         }
     }
@@ -98,6 +100,6 @@ open class GeoJsonBenchmark {
 
     @Benchmark
     fun deserialization() {
-        FeatureCollection.fromJson(jsonString)
+        FeatureCollection.fromJson<Geometry?, JsonObject?>(jsonString)
     }
 }
