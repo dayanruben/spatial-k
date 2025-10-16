@@ -14,6 +14,13 @@ group = "org.maplibre.spatialk"
 
 kotlin {
     explicitApi()
+    compilerOptions {
+        freeCompilerArgs =
+            listOf(
+                // Will be the default soon: https://youtrack.jetbrains.com/issue/KT-11914
+                "-Xconsistent-data-class-copy-visibility"
+            )
+    }
     abiValidation {
         @OptIn(ExperimentalAbiValidation::class)
         enabled = true
@@ -32,7 +39,7 @@ dokka {
         configureEach {
             includes.from("MODULE.md")
             sourceLink {
-                remoteUrl("https://github.com/maplibre/spatial-k/tree/${project.version}/")
+                remoteUrl("https://github.com/maplibre/spatial-k/tree/v${project.version}/")
                 localDirectory = rootDir
             }
             externalDocumentationLinks {

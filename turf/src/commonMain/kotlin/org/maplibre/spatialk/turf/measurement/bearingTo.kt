@@ -6,6 +6,8 @@ package org.maplibre.spatialk.turf.measurement
 import kotlin.jvm.JvmMultifileClass
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmOverloads
+import kotlin.jvm.JvmSynthetic
+import org.maplibre.spatialk.geojson.Point
 import org.maplibre.spatialk.geojson.Position
 import org.maplibre.spatialk.units.Bearing
 import org.maplibre.spatialk.units.Bearing.Companion.North
@@ -19,10 +21,11 @@ import org.maplibre.spatialk.units.extensions.*
  *
  * @param to ending point
  * @param final calculates the final bearing if true
- * @return bearing in decimal degrees, between -180 and 180 degrees (positive clockwise)
+ * @return [Bearing] between this and [to]
  */
 @JvmOverloads
 @JvmName("bearingToAsBearing")
+@JvmSynthetic
 public fun Position.bearingTo(to: Position, final: Boolean = false): Bearing {
     if (final) return to.bearingTo(this) + 180.degrees
 
@@ -37,6 +40,20 @@ public fun Position.bearingTo(to: Position, final: Boolean = false): Bearing {
     return North + atan2(a, b)
 }
 
+/**
+ * Takes two points and finds the geographic bearing between them, i.e., the angle measured in
+ * degrees from the north line.
+ *
+ * @param to ending point
+ * @param final calculates the final bearing if true
+ * @return [Bearing] between this and [to]
+ */
+@JvmOverloads
+@JvmName("bearingToAsBearing")
+@JvmSynthetic
+public fun Point.bearingTo(to: Point, final: Boolean = false): Bearing =
+    this.coordinates.bearingTo(to.coordinates, final)
+
 @PublishedApi
 @Suppress("unused")
 @JvmOverloads
@@ -46,3 +63,13 @@ internal fun bearingTo(
     final: Boolean = false,
     unit: RotationUnit = Degrees,
 ): Double = from.bearingTo(to, final).smallestRotationTo(North).toDouble(unit)
+
+@PublishedApi
+@Suppress("unused")
+@JvmOverloads
+internal fun bearingTo(
+    from: Point,
+    to: Point,
+    final: Boolean = false,
+    unit: RotationUnit = Degrees,
+): Double = bearingTo(from.coordinates, to.coordinates, final, unit)
