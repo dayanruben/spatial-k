@@ -18,6 +18,7 @@ permissions:
 
 jobs:
     publish-maven:
+        if: ${{ github.repository_owner == 'maplibre' }}
         runs-on: ubuntu-latest
         environment:
             name: maven-central
@@ -44,6 +45,7 @@ jobs:
                       ${{ secrets.GPG_PASSPHRASE }}
 
     publish-pages:
+        if: ${{ github.repository_owner == 'maplibre' }}
         runs-on: ubuntu-latest
         permissions:
             pages: write
