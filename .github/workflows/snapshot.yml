@@ -10,6 +10,7 @@ permissions:
 
 jobs:
     check-last-run:
+        if: ${{ github.repository_owner == 'maplibre' }}
         runs-on: ubuntu-latest
         permissions:
             actions: read
@@ -57,7 +58,9 @@ jobs:
 
     dryrun-pages:
         needs: [check-last-run]
-        if: ${{ needs.check-last-run.outputs.last_sha != github.sha }}
+        if:
+            ${{ needs.check-last-run.outputs.last_sha != github.sha &&
+            github.repository_owner == 'maplibre' }}
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -76,7 +79,9 @@ jobs:
 
     dryrun-tag:
         needs: [check-last-run, publish-maven-snapshot, dryrun-pages]
-        if: ${{ needs.check-last-run.outputs.last_sha != github.sha }}
+        if:
+            ${{ needs.check-last-run.outputs.last_sha != github.sha &&
+            github.repository_owner == 'maplibre' }}
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
