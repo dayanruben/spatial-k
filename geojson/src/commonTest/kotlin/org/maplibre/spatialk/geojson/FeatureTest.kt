@@ -508,10 +508,10 @@ class FeatureTest {
         // Map<*, *> properties not tested because the fallback serializer selection does not
         // support generic types.
 
-        val nullPropsFeature: GeoJsonObject = Feature(null, null)
-        val jsonObjectPropsFeature: GeoJsonObject =
+        val nullPropsFeature: Feature<*, *> = Feature(null, null)
+        val jsonObjectPropsFeature: Feature<*, *> =
             Feature(null, JsonObject(mapOf("key" to JsonPrimitive("value"))))
-        val dataClassPropsFeature: GeoJsonObject = Feature(null, NameProp("test"))
+        val dataClassPropsFeature: Feature<*, *> = Feature(null, NameProp("test"))
 
         val nullDeserialized = GeoJsonObject.fromJson(nullPropsFeature.toJson()) as Feature<*, *>
         val jsonObjectDeserialized =
@@ -526,5 +526,23 @@ class FeatureTest {
 
         assertIs<JsonObject>(dataClassDeserialized.properties)
         assertEquals(JsonPrimitive("test"), dataClassDeserialized.properties["name"])
+    }
+
+    @Test
+    fun testLenientNoProperties() {
+        val json =
+            """
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [125.6, 10.1]
+                }
+            }
+            """
+                .trimIndent()
+        val feature = Feature.fromJson<Point, NameProp>(json)
+        assertEquals(feature.geometry.coordinates.longitude, 125.6, DELTA)
+        assertEquals(feature.geometry.coordinates.latitude, 10.1, DELTA)
     }
 }
