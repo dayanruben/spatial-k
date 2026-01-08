@@ -7,3 +7,5 @@
 /site
 /docs/api
 .claude/*.local.json
+.junie
+.output.txt
