@@ -10,7 +10,7 @@ permissions:
 
 jobs:
     build:
-        if: github.repository == 'maplibre/spatial-k'
+      if: github.repository == 'maplibre/spatial-k'
         strategy:
                 if: github.repository == 'maplibre/spatial-k'
             matrix:
@@ -60,7 +60,7 @@ jobs:
                   ./gradlew -q :koverLog | tee $GITHUB_STEP_SUMMARY
 
     benchmark:
-        if: github.repository == 'maplibre/spatial-k'
+      if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         steps:
@@ -88,8 +88,7 @@ jobs:
                   ./gradlew -q benchmark -PbenchmarkWarmups=1 -PbenchmarkIterations=1 | tee $GITHUB_STEP_SUMMARY
 
     build-docs:
-        if: ${{ github.repository_owner == 'maplibre' }}
-                if: github.repository == 'maplibre/spatial-k'
+      if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         steps:
@@ -118,7 +117,7 @@ jobs:
                                     if: github.repository == 'maplibre/spatial-k'
 
     check-format:
-        if: github.repository == 'maplibre/spatial-k'
+      if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         permissions:
@@ -168,7 +167,7 @@ jobs:
 
     # stub to use as a "required" check on github
     all-good:
-        if: github.repository == 'maplibre/spatial-k'
+      if: github.repository == 'maplibre/spatial-k'
         needs: [build, check-format, build-docs, benchmark]
                 if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
