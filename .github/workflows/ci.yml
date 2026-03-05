@@ -10,169 +10,101 @@ permissions:
 
 jobs:
     build:
-        if: github.repository == 'maplibre/spatial-k'
         strategy:
-                if: github.repository == 'maplibre/spatial-k'
             matrix:
-                        if: github.repository == 'maplibre/spatial-k'
                 include:
-                                if: github.repository == 'maplibre/spatial-k'
                     # Run full build and most tests on ubuntu
                     - runner: ubuntu-latest
                       task: build
-                                            if: github.repository == 'maplibre/spatial-k'
                     # Run windows and macos native tests on those platforms
                     - runner: windows-latest
                       task: mingwX64Test
-                                            if: github.repository == 'maplibre/spatial-k'
                     - runner: macos-latest
                       task: macosArm64Test
-                                            if: github.repository == 'maplibre/spatial-k'
 
         runs-on: ${{ matrix.runner }}
-                if: github.repository == 'maplibre/spatial-k'
         steps:
-                if: github.repository == 'maplibre/spatial-k'
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   fetch-depth: 0
-                                    if: github.repository == 'maplibre/spatial-k'
                   fetch-tags: true
-                                    if: github.repository == 'maplibre/spatial-k'
                   persist-credentials: false
-                                    if: github.repository == 'maplibre/spatial-k'
             - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   distribution: temurin
-                                    if: github.repository == 'maplibre/spatial-k'
                   java-version: 21
-                                    if: github.repository == 'maplibre/spatial-k'
             - run: ./gradlew version # TODO: remove this once we're confident in our config
             - run: ./gradlew ${{ matrix.task }}
             - if: ${{ matrix.task == 'build' }} # Kover only supports JVM
               name: Generate coverage summary
-                            if: github.repository == 'maplibre/spatial-k'
               run: |
-                            if: github.repository == 'maplibre/spatial-k'
                   echo '## Coverage' >> $GITHUB_STEP_SUMMARY
                   ./gradlew -q :koverLog | tee $GITHUB_STEP_SUMMARY
 
     benchmark:
-        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
-                if: github.repository == 'maplibre/spatial-k'
         steps:
-                if: github.repository == 'maplibre/spatial-k'
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   fetch-depth: 0
-                                    if: github.repository == 'maplibre/spatial-k'
                   fetch-tags: true
-                                    if: github.repository == 'maplibre/spatial-k'
                   persist-credentials: false
-                                    if: github.repository == 'maplibre/spatial-k'
             - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   distribution: temurin
-                                    if: github.repository == 'maplibre/spatial-k'
                   java-version: 21
-                                    if: github.repository == 'maplibre/spatial-k'
             - name: Run benchmark
               run: |
-                            if: github.repository == 'maplibre/spatial-k'
                   echo '## Benchmark' >> $GITHUB_STEP_SUMMARY
                   ./gradlew -q benchmark -PbenchmarkWarmups=1 -PbenchmarkIterations=1 | tee $GITHUB_STEP_SUMMARY
 
     build-docs:
-        if: ${{ github.repository_owner == 'maplibre' }}
-                if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
-                if: github.repository == 'maplibre/spatial-k'
         steps:
-                if: github.repository == 'maplibre/spatial-k'
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   fetch-depth: 0
-                                    if: github.repository == 'maplibre/spatial-k'
                   fetch-tags: true
-                                    if: github.repository == 'maplibre/spatial-k'
                   persist-credentials: false
-                                    if: github.repository == 'maplibre/spatial-k'
             - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   distribution: temurin
-                                    if: github.repository == 'maplibre/spatial-k'
                   java-version: 21
-                                    if: github.repository == 'maplibre/spatial-k'
             - run: ./gradlew :mkdocsBuild
             - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   path: build/mkdocs
-                                    if: github.repository == 'maplibre/spatial-k'
 
     check-format:
-        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
-                if: github.repository == 'maplibre/spatial-k'
         permissions:
-                if: github.repository == 'maplibre/spatial-k'
             contents: read
-                        if: github.repository == 'maplibre/spatial-k'
             checks: write
-                        if: github.repository == 'maplibre/spatial-k'
             issues: write
-                        if: github.repository == 'maplibre/spatial-k'
             pull-requests: write
-                        if: github.repository == 'maplibre/spatial-k'
         steps:
-                if: github.repository == 'maplibre/spatial-k'
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   fetch-depth: 0
-                                    if: github.repository == 'maplibre/spatial-k'
                   fetch-tags: true
-                                    if: github.repository == 'maplibre/spatial-k'
                   persist-credentials: false
-                                    if: github.repository == 'maplibre/spatial-k'
             - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   distribution: temurin
-                                    if: github.repository == 'maplibre/spatial-k'
                   java-version: 21
-                                    if: github.repository == 'maplibre/spatial-k'
             - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   extra_args: --all-files --hook-stage manual
-                                    if: github.repository == 'maplibre/spatial-k'
             - if: ${{ github.event_name == 'pull_request' && always() }}
               uses: reviewdog/action-suggester@aa38384ceb608d00f84b4690cacc83a5aba307ff # v1.24.0
-                            if: github.repository == 'maplibre/spatial-k'
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   tool_name: format
-                                    if: github.repository == 'maplibre/spatial-k'
                   fail_level: any
-                                    if: github.repository == 'maplibre/spatial-k'
                   filter_mode: diff_context
-                                    if: github.repository == 'maplibre/spatial-k'
 
     # stub to use as a "required" check on github
     all-good:
-        if: github.repository == 'maplibre/spatial-k'
         needs: [build, check-format, build-docs, benchmark]
-                if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
-                if: github.repository == 'maplibre/spatial-k'
         steps:
-                if: github.repository == 'maplibre/spatial-k'
             - run: echo 'All checks passed!'

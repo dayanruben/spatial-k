@@ -18,119 +18,70 @@ permissions:
 
 jobs:
     publish-maven:
-        if: ${{ github.repository_owner == 'maplibre' }}
-                if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
-                if: github.repository == 'maplibre/spatial-k'
         environment:
-                if: github.repository == 'maplibre/spatial-k'
             name: maven-central
-                        if: github.repository == 'maplibre/spatial-k'
             url: https://central.sonatype.com/namespace/org.maplibre.spatialk
-                        if: github.repository == 'maplibre/spatial-k'
         steps:
-                if: github.repository == 'maplibre/spatial-k'
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   fetch-depth: 0
-                                    if: github.repository == 'maplibre/spatial-k'
                   fetch-tags: true
-                                    if: github.repository == 'maplibre/spatial-k'
             - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   distribution: temurin
-                                    if: github.repository == 'maplibre/spatial-k'
                   java-version: 21
-                                    if: github.repository == 'maplibre/spatial-k'
             - run: |
                   ./gradlew publishAndReleaseToMavenCentral -Psemver.stage=final -Psemver.scope=${{ github.event.inputs.scope }}
               env:
-                            if: github.repository == 'maplibre/spatial-k'
                   ORG_GRADLE_PROJECT_mavenCentralUsername:
-                                    if: github.repository == 'maplibre/spatial-k'
                       ${{ secrets.MAVEN_CENTRAL_USERNAME }}
                   ORG_GRADLE_PROJECT_mavenCentralPassword:
-                                    if: github.repository == 'maplibre/spatial-k'
                       ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
                   ORG_GRADLE_PROJECT_signingInMemoryKey:
-                                    if: github.repository == 'maplibre/spatial-k'
                       ${{ secrets.GPG_PRIVATE_KEY }}
                   ORG_GRADLE_PROJECT_signingInMemoryKeyPassword:
-                                    if: github.repository == 'maplibre/spatial-k'
                       ${{ secrets.GPG_PASSPHRASE }}
 
     publish-pages:
-        if: ${{ github.repository_owner == 'maplibre' }}
-                if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
-                if: github.repository == 'maplibre/spatial-k'
         permissions:
-                if: github.repository == 'maplibre/spatial-k'
             pages: write
-                        if: github.repository == 'maplibre/spatial-k'
             id-token: write
-                        if: github.repository == 'maplibre/spatial-k'
         environment:
-                if: github.repository == 'maplibre/spatial-k'
             name: github-pages
-                        if: github.repository == 'maplibre/spatial-k'
             url: ${{ steps.deploy-pages.outputs.page_url }}
-                        if: github.repository == 'maplibre/spatial-k'
         steps:
-                if: github.repository == 'maplibre/spatial-k'
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   fetch-depth: 0
-                                    if: github.repository == 'maplibre/spatial-k'
                   fetch-tags: true
-                                    if: github.repository == 'maplibre/spatial-k'
             - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   distribution: temurin
-                                    if: github.repository == 'maplibre/spatial-k'
                   java-version: 21
-                                    if: github.repository == 'maplibre/spatial-k'
             - run: |
                   ./gradlew :mkdocsBuild -Psemver.stage=final -Psemver.scope=${{ github.event.inputs.scope }}
             - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   path: build/mkdocs
-                                    if: github.repository == 'maplibre/spatial-k'
             - uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
               id: deploy-pages
-                            if: github.repository == 'maplibre/spatial-k'
 
     tag:
-        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
-                if: github.repository == 'maplibre/spatial-k'
         needs: [publish-maven, publish-pages]
-                if: github.repository == 'maplibre/spatial-k'
         permissions:
-                if: github.repository == 'maplibre/spatial-k'
             contents: write
-                        if: github.repository == 'maplibre/spatial-k'
         steps:
-                if: github.repository == 'maplibre/spatial-k'
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   fetch-depth: 0
-                                    if: github.repository == 'maplibre/spatial-k'
                   fetch-tags: true
-                                    if: github.repository == 'maplibre/spatial-k'
             - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
               with:
-                            if: github.repository == 'maplibre/spatial-k'
                   distribution: temurin
-                                    if: github.repository == 'maplibre/spatial-k'
                   java-version: 21
-                                    if: github.repository == 'maplibre/spatial-k'
             - run: |
                   ./gradlew :createSemverTag -Psemver.stage=final -Psemver.scope=${{ github.event.inputs.scope }}
             - run: git push --follow-tags
