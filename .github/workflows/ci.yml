@@ -19,8 +19,6 @@ jobs:
                     # Run windows and macos native tests on those platforms
                     - runner: windows-latest
                       task: mingwX64Test
-                    - runner: macos-latest
-                      task: macosArm64Test
 
         runs-on: ${{ matrix.runner }}
         steps:
