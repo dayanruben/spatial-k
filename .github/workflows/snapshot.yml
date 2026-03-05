@@ -10,8 +10,11 @@ permissions:
 
 jobs:
     check-last-run:
+<<<<<<< HEAD
         if: ${{ github.repository_owner == 'maplibre' }}
                 if: github.repository == 'maplibre/spatial-k'
+=======
+>>>>>>> origin/main
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         permissions:
@@ -41,10 +44,14 @@ jobs:
     publish-maven-snapshot:
         if: github.repository == 'maplibre/spatial-k'
         needs: [check-last-run]
+<<<<<<< HEAD
         if:
                 if: github.repository == 'maplibre/spatial-k'
             ${{ needs.check-last-run.outputs.last_sha != github.sha &&
             github.repository_owner == 'maplibre' }}
+=======
+        if: ${{ needs.check-last-run.outputs.last_sha != github.sha }}
+>>>>>>> origin/main
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         environment:
@@ -89,10 +96,14 @@ jobs:
     dryrun-pages:
         if: github.repository == 'maplibre/spatial-k'
         needs: [check-last-run]
+<<<<<<< HEAD
         if:
                 if: github.repository == 'maplibre/spatial-k'
             ${{ needs.check-last-run.outputs.last_sha != github.sha &&
             github.repository_owner == 'maplibre' }}
+=======
+        if: ${{ needs.check-last-run.outputs.last_sha != github.sha }}
+>>>>>>> origin/main
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         steps:
@@ -122,10 +133,14 @@ jobs:
     dryrun-tag:
         if: github.repository == 'maplibre/spatial-k'
         needs: [check-last-run, publish-maven-snapshot, dryrun-pages]
+<<<<<<< HEAD
         if:
                 if: github.repository == 'maplibre/spatial-k'
             ${{ needs.check-last-run.outputs.last_sha != github.sha &&
             github.repository_owner == 'maplibre' }}
+=======
+        if: ${{ needs.check-last-run.outputs.last_sha != github.sha }}
+>>>>>>> origin/main
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         steps:
