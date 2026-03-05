@@ -42,7 +42,7 @@ jobs:
                   ./gradlew -q :koverLog | tee $GITHUB_STEP_SUMMARY
 
     benchmark:
-      if: github.repository == 'maplibre/spatial-k'
+        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -60,7 +60,7 @@ jobs:
                   ./gradlew -q benchmark -PbenchmarkWarmups=1 -PbenchmarkIterations=1 | tee $GITHUB_STEP_SUMMARY
 
     build-docs:
-      if: github.repository == 'maplibre/spatial-k'
+        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -78,7 +78,7 @@ jobs:
                   path: build/mkdocs
 
     check-format:
-      if: github.repository == 'maplibre/spatial-k'
+        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -107,7 +107,7 @@ jobs:
 
     # stub to use as a "required" check on github
     all-good:
-      if: github.repository == 'maplibre/spatial-k'
+        if: github.repository == 'maplibre/spatial-k'
         needs: [build, check-format, build-docs, benchmark]
         runs-on: ubuntu-latest
         steps:
