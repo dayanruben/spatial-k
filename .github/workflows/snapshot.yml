@@ -27,7 +27,6 @@ jobs:
                 ${{ fromJson(steps.check-last-run.outputs.data).workflow_runs[0].head_sha }}
 
     publish-maven-snapshot:
-      if: github.repository == 'maplibre/spatial-k'
         needs: [check-last-run]
         if:
             ${{ needs.check-last-run.outputs.last_sha != github.sha &&
