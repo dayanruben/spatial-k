@@ -10,7 +10,6 @@ permissions:
 
 jobs:
     build:
-      if: github.repository == 'maplibre/spatial-k'
         strategy:
             matrix:
                 include:
