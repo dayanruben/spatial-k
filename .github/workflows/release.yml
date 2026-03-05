@@ -18,8 +18,7 @@ permissions:
 
 jobs:
     publish-maven:
-        if: ${{ github.repository_owner == 'maplibre' }}
-                if: github.repository == 'maplibre/spatial-k'
+      if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         environment:
@@ -62,8 +61,7 @@ jobs:
                       ${{ secrets.GPG_PASSPHRASE }}
 
     publish-pages:
-        if: ${{ github.repository_owner == 'maplibre' }}
-                if: github.repository == 'maplibre/spatial-k'
+      if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         permissions:
@@ -106,7 +104,7 @@ jobs:
                             if: github.repository == 'maplibre/spatial-k'
 
     tag:
-        if: github.repository == 'maplibre/spatial-k'
+      if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
                 if: github.repository == 'maplibre/spatial-k'
         needs: [publish-maven, publish-pages]
