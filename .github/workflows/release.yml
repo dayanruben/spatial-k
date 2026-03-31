@@ -18,7 +18,7 @@ permissions:
 
 jobs:
     publish-maven:
-      if: github.repository == 'maplibre/spatial-k'
+        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
         environment:
             name: maven-central
@@ -45,7 +45,7 @@ jobs:
                       ${{ secrets.GPG_PASSPHRASE }}
 
     publish-pages:
-      if: github.repository == 'maplibre/spatial-k'
+        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
         permissions:
             pages: write
@@ -71,7 +71,7 @@ jobs:
               id: deploy-pages
 
     tag:
-      if: github.repository == 'maplibre/spatial-k'
+        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
         needs: [publish-maven, publish-pages]
         permissions:
