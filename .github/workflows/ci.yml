@@ -30,10 +30,7 @@ jobs:
                   fetch-depth: 0
                   fetch-tags: true
                   persist-credentials: false
-            - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
-              with:
-                  distribution: temurin
-                  java-version: 21
+            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
             - run: ./gradlew version # TODO: remove this once we're confident in our config
             - run: ./gradlew ${{ matrix.task }}
             - if: ${{ matrix.task == 'build' }} # Kover only supports JVM
@@ -51,10 +48,7 @@ jobs:
                   fetch-depth: 0
                   fetch-tags: true
                   persist-credentials: false
-            - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
-              with:
-                  distribution: temurin
-                  java-version: 21
+            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
             - name: Run benchmark
               run: |
                   echo '## Benchmark' >> $GITHUB_STEP_SUMMARY
@@ -69,10 +63,7 @@ jobs:
                   fetch-depth: 0
                   fetch-tags: true
                   persist-credentials: false
-            - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
-              with:
-                  distribution: temurin
-                  java-version: 21
+            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
             - run: ./gradlew :mkdocsBuild
             - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
               with:
@@ -81,30 +72,14 @@ jobs:
     check-format:
       if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            checks: write
-            issues: write
-            pull-requests: write
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
                   fetch-depth: 0
                   fetch-tags: true
                   persist-credentials: false
-            - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
-              with:
-                  distribution: temurin
-                  java-version: 21
-            - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
-              with:
-                  extra_args: --all-files --hook-stage manual
-            - if: ${{ github.event_name == 'pull_request' && always() }}
-              uses: reviewdog/action-suggester@aa38384ceb608d00f84b4690cacc83a5aba307ff # v1.24.0
-              with:
-                  tool_name: format
-                  fail_level: any
-                  filter_mode: diff_context
+            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+            - run: mise run check
 
     # stub to use as a "required" check on github
     all-good:
