@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalAbiValidation::class)
+
 import dev.detekt.gradle.extensions.FailOnSeverity
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
@@ -22,7 +24,6 @@ kotlin {
             )
     }
     abiValidation {
-        @OptIn(ExperimentalAbiValidation::class)
         enabled = true
     }
 }
