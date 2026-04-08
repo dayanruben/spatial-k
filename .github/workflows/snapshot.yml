@@ -10,6 +10,7 @@ permissions:
 
 jobs:
     check-last-run:
+        if: github.repository == 'maplibre/spatial-k'
         runs-on: ubuntu-latest
         permissions:
             actions: read
@@ -27,7 +28,7 @@ jobs:
 
     publish-maven-snapshot:
         needs: [check-last-run]
-        if: ${{ needs.check-last-run.outputs.last_sha != github.sha }}
+        if: ${{ github.repository == 'maplibre/spatial-k' && needs.check-last-run.outputs.last_sha != github.sha }}
         runs-on: ubuntu-latest
         environment:
             name: maven-central
@@ -52,7 +53,7 @@ jobs:
 
     dryrun-pages:
         needs: [check-last-run]
-        if: ${{ needs.check-last-run.outputs.last_sha != github.sha }}
+        if: ${{ github.repository == 'maplibre/spatial-k' && needs.check-last-run.outputs.last_sha != github.sha }}
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -68,7 +69,7 @@ jobs:
 
     dryrun-tag:
         needs: [check-last-run, publish-maven-snapshot, dryrun-pages]
-        if: ${{ needs.check-last-run.outputs.last_sha != github.sha }}
+        if: ${{ github.repository == 'maplibre/spatial-k' && needs.check-last-run.outputs.last_sha != github.sha }}
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
