@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/github/license/maplibre/spatial-k?label=License)](https://github.com/maplibre/spatial-k/blob/main/LICENSE)
 [![Kotlin Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmaplibre%2Fspatial-k%2Frefs%2Fheads%2Fmain%2Fgradle%2Flibs.versions.toml&query=versions.kotlin&prefix=v&logo=kotlin&label=Kotlin)](./gradle/libs.versions.toml)
 [![Documentation](https://img.shields.io/badge/Documentation-blue?logo=MaterialForMkDocs&logoColor=white)](https://maplibre.org/spatial-k/)
-[![API Reference](https://img.shields.io/badge/API_Reference-blue?logo=Kotlin&logoColor=white)](https://maplibre.org/spatial-k/api/)
+[![API Reference](https://img.shields.io/badge/API_Reference-blue?logo=Kotlin&logoColor=white)](https://maplibre.org/spatial-k/api/dokka/)
 [![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack&logoColor=white)](https://osmus.slack.com/archives/maplibre)
 
 ## Introduction
@@ -85,9 +85,9 @@ val gpxString = Gpx.encodeToString(document)
 
 ```kotlin
 // Inside a suspend function or coroutine scope:
-PmTilesArchive.open(source).use { archive ->
+PmTiles.open(source).use { archive ->
     val header = archive.header
-    val tile = archive.getDecompressedTile(z = 0, x = 0, y = 0)
+    val tile = archive.readDecompressedTile(z = 0, x = 0, y = 0)
 }
 ```
 

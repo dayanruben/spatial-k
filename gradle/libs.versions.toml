@@ -10,8 +10,6 @@ kotlinx-datetime = "0.8.0"
 kotlin-wrappers = "2026.5.6"
 vanniktech-publish = "0.36.0"
 dokka = "2.2.0"
-semver = "0.9.0"
-mkdocs-build = "4.0.1"
 detekt = "2.0.0-alpha.3"
 xmlutil = "0.91.3"
 
@@ -25,6 +23,7 @@ kotlinx-benchmark = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime"
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-io-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinx-io" }
+kotlinx-io-bytestring = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-bytestring", version.ref = "kotlinx-io" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlin-web = { module = "org.jetbrains.kotlin-wrappers:kotlin-web", version.ref = "kotlin-wrappers" }
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -33,8 +32,6 @@ gradle-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref
 gradle-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktech-publish" }
 gradle-benchmark = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-plugin", version.ref = "kotlinx-benchmark" }
 gradle-kover = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kotlinx-kover" }
-gradle-semver = { module = "com.javiersc.semver:com.javiersc.semver.gradle.plugin", version.ref = "semver" }
-gradle-mkdocs-build = { module = "ru.vyarus.mkdocs-build:ru.vyarus.mkdocs-build.gradle.plugin", version.ref = "mkdocs-build" }
 gradle-detekt = { module = "dev.detekt:dev.detekt.gradle.plugin", version.ref = "detekt" }
 xmlutil-core = { module = "io.github.pdvrieze.xmlutil:core", version.ref = "xmlutil" }
 xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xmlutil" }

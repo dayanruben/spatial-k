@@ -1,16 +1,17 @@
 package org.maplibre.spatialk.pmtiles.internal
 
 import kotlin.coroutines.cancellation.CancellationException
+import kotlinx.io.bytestring.ByteString
 import org.maplibre.spatialk.pmtiles.ByteRange
 import org.maplibre.spatialk.pmtiles.ByteRangeSource
-import org.maplibre.spatialk.pmtiles.PmTilesErrorCode
+import org.maplibre.spatialk.pmtiles.PmTilesErrorCodes
 import org.maplibre.spatialk.pmtiles.PmTilesException
 
 internal suspend fun ByteRangeSource.readSourceRange(
     range: ByteRange,
     archiveSize: ULong,
-    maxBytes: Int,
-): ByteArray {
+    maxBytes: ULong,
+): ByteString {
     validateReadRange(range, archiveSize, maxBytes)
     val bytes =
         try {
@@ -21,15 +22,15 @@ internal suspend fun ByteRangeSource.readSourceRange(
             throw error
         } catch (error: Throwable) {
             throw pmTilesException(
-                PmTilesErrorCode.SourceUnavailable,
+                PmTilesErrorCodes.SourceUnavailable,
                 "Byte range source could not read $range.",
                 error,
             )
         }
 
-    if (bytes.size != range.length) {
+    if (bytes.size.toULong() != range.length) {
         throw pmTilesException(
-            PmTilesErrorCode.SourceUnavailable,
+            PmTilesErrorCodes.SourceUnavailable,
             "Byte range source returned ${bytes.size} bytes for requested length ${range.length}.",
         )
     }
@@ -45,7 +46,7 @@ internal suspend fun ByteRangeSource.sourceSize(): ULong =
         throw error
     } catch (error: Throwable) {
         throw pmTilesException(
-            PmTilesErrorCode.SourceUnavailable,
+            PmTilesErrorCodes.SourceUnavailable,
             "Byte range source could not report archive size.",
             error,
         )

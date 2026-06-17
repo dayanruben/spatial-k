@@ -6,11 +6,12 @@ plugins {
     id("org.jetbrains.dokka")
     id("com.vanniktech.maven.publish")
     id("org.jetbrains.kotlinx.kover")
-    id("semver")
     id("dev.detekt")
 }
 
 group = "org.maplibre.spatialk"
+
+version = providers.gradleProperty("spatialKVersion").getOrElse("0.0.0-SNAPSHOT")
 
 kotlin {
     explicitApi()
@@ -50,7 +51,7 @@ dokka {
         }
     }
     pluginsConfiguration {
-        html { customStyleSheets.from(rootProject.file("docs/styles/dokka-extra.css")) }
+        html { customStyleSheets.from(rootProject.file("docs/src/styles/dokka-extra.css")) }
     }
 }
 

@@ -1,9 +1,10 @@
 package org.maplibre.spatialk.pmtiles.internal
 
+import kotlinx.io.bytestring.ByteString
 import org.maplibre.spatialk.pmtiles.ArchiveHeader
 import org.maplibre.spatialk.pmtiles.ArchiveLimits
 import org.maplibre.spatialk.pmtiles.ArchiveSection
-import org.maplibre.spatialk.pmtiles.PmTilesErrorCode
+import org.maplibre.spatialk.pmtiles.PmTilesErrorCodes
 
 internal data class DirectoryEntry(
     val tileId: Long,
@@ -41,7 +42,7 @@ internal fun DirectoryEntry.coversTile(targetTileId: Long): Boolean {
     if (!isTile) return false
     if (tileId > Long.MAX_VALUE - runLength.toLong()) {
         throw pmTilesException(
-            PmTilesErrorCode.InvalidDirectory,
+            PmTilesErrorCodes.InvalidDirectory,
             "Directory tile run overflows the supported TileID range.",
         )
     }
@@ -49,12 +50,12 @@ internal fun DirectoryEntry.coversTile(targetTileId: Long): Boolean {
 }
 
 internal fun decodeDirectory(
-    bytes: ByteArray,
+    bytes: ByteString,
     header: ArchiveHeader,
     limits: ArchiveLimits,
     allowEmpty: Boolean = false,
 ): List<DirectoryEntry> {
-    val reader = BinaryReader(bytes, PmTilesErrorCode.InvalidDirectory)
+    val reader = BinaryReader(bytes, PmTilesErrorCodes.InvalidDirectory)
     val entryCount = reader.readEntryCount(limits, allowEmpty)
     val tileIds = reader.readTileIds(entryCount, limits)
     val runLengths = reader.readRunLengths(entryCount, limits)
@@ -63,7 +64,7 @@ internal fun decodeDirectory(
 
     if (reader.remaining != 0) {
         throw pmTilesException(
-            PmTilesErrorCode.InvalidDirectory,
+            PmTilesErrorCodes.InvalidDirectory,
             "Directory has ${reader.remaining} trailing bytes.",
         )
     }
@@ -83,13 +84,13 @@ private fun BinaryReader.readEntryCount(limits: ArchiveLimits, allowEmpty: Boole
     val count = readVarint(limits.maxVarintBytes)
     if (count == 0uL && !allowEmpty) {
         throw pmTilesException(
-            PmTilesErrorCode.InvalidDirectory,
+            PmTilesErrorCodes.InvalidDirectory,
             "Directory entry count is zero.",
         )
     }
-    if (limits.maxDirectoryEntries < 0 || count > limits.maxDirectoryEntries.toULong()) {
+    if (count > limits.maxDirectoryEntries.toULong()) {
         throw pmTilesException(
-            PmTilesErrorCode.LimitExceeded,
+            PmTilesErrorCodes.LimitExceeded,
             "Directory entry count $count exceeds limit ${limits.maxDirectoryEntries}.",
         )
     }
@@ -101,10 +102,10 @@ private fun BinaryReader.readTileIds(entryCount: Int, limits: ArchiveLimits): Lo
     var lastTileId = 0uL
     repeat(entryCount) { index ->
         val delta = readVarint(limits.maxVarintBytes)
-        val tileId = checkedAdd(lastTileId, delta, PmTilesErrorCode.InvalidDirectory)
+        val tileId = checkedAdd(lastTileId, delta, PmTilesErrorCodes.InvalidDirectory)
         if (index > 0 && tileId <= lastTileId) {
             throw pmTilesException(
-                PmTilesErrorCode.InvalidDirectory,
+                PmTilesErrorCodes.InvalidDirectory,
                 "Directory TileIDs must be strictly increasing.",
             )
         }
@@ -133,7 +134,7 @@ private fun BinaryReader.readLengths(
         val length = readOperationalInt("Directory entry length", limits)
         if (length == 0) {
             throw pmTilesException(
-                PmTilesErrorCode.InvalidDirectory,
+                PmTilesErrorCodes.InvalidDirectory,
                 "Directory entry length is zero.",
             )
         }
@@ -163,14 +164,14 @@ private fun BinaryReader.readOffsets(
             if (encodedOffset == 0uL) {
                 if (index == 0) {
                     throw pmTilesException(
-                        PmTilesErrorCode.InvalidDirectory,
+                        PmTilesErrorCodes.InvalidDirectory,
                         "First directory entry cannot use contiguous offset shorthand.",
                     )
                 }
                 checkedAdd(
                     offsets[index - 1],
                     lengths[index - 1].toULong(),
-                    PmTilesErrorCode.InvalidDirectory,
+                    PmTilesErrorCodes.InvalidDirectory,
                 )
             } else {
                 encodedOffset - 1uL
@@ -186,10 +187,10 @@ private fun validateEntryRange(entry: DirectoryEntry, header: ArchiveHeader) {
         } else {
             header.tileData
         }
-    val end = checkedAdd(entry.offset, entry.length.toULong(), PmTilesErrorCode.InvalidDirectory)
+    val end = checkedAdd(entry.offset, entry.length.toULong(), PmTilesErrorCodes.InvalidDirectory)
     if (end > section.length) {
         throw pmTilesException(
-            PmTilesErrorCode.InvalidDirectory,
+            PmTilesErrorCodes.InvalidDirectory,
             "Directory entry range exceeds its relative section length.",
         )
     }
@@ -209,7 +210,7 @@ private fun validateSectionAvailable(
         }
     if (hasEntry) {
         throw pmTilesException(
-            PmTilesErrorCode.InvalidDirectory,
+            PmTilesErrorCodes.InvalidDirectory,
             "Directory entry points into an empty section.",
         )
     }
@@ -223,7 +224,7 @@ private fun BinaryReader.readOperationalInt(purpose: String, limits: ArchiveLimi
 private fun ULong.toIntChecked(purpose: String): Int {
     if (this > Int.MAX_VALUE.toULong()) {
         throw pmTilesException(
-            PmTilesErrorCode.LimitExceeded,
+            PmTilesErrorCodes.LimitExceeded,
             "$purpose $this exceeds the supported Int range.",
         )
     }
@@ -233,7 +234,7 @@ private fun ULong.toIntChecked(purpose: String): Int {
 private fun ULong.toLongChecked(purpose: String): Long {
     if (this > Long.MAX_VALUE.toULong()) {
         throw pmTilesException(
-            PmTilesErrorCode.InvalidDirectory,
+            PmTilesErrorCodes.InvalidDirectory,
             "$purpose $this exceeds the supported Long range.",
         )
     }
