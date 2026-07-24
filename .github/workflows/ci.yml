@@ -14,97 +14,82 @@ jobs:
             matrix:
                 include:
                     # Run full build and most tests on ubuntu
-                    - runner: ubuntu-latest
+                    - runner: ubuntu-24.04
                       task: build
                     # Run windows and macos native tests on those platforms
-                    - runner: windows-latest
+                    - runner: windows-2025
                       task: mingwX64Test
-                    - runner: macos-latest
+                    - runner: macos-26
                       task: macosArm64Test
-
         runs-on: ${{ matrix.runner }}
         steps:
-            - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  fetch-depth: 0
-                  fetch-tags: true
                   persist-credentials: false
-            - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
-              with:
-                  distribution: temurin
-                  java-version: 21
+            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
             - run: ./gradlew version # TODO: remove this once we're confident in our config
-            - run: ./gradlew ${{ matrix.task }}
+            - run: ./gradlew "${{ matrix.task }}"
+            - if: ${{ matrix.task == 'macosArm64Test' }}
+              run: mise run test:swift
             - if: ${{ matrix.task == 'build' }} # Kover only supports JVM
               name: Generate coverage summary
               run: |
-                  echo '## Coverage' >> $GITHUB_STEP_SUMMARY
-                  ./gradlew -q :koverLog | tee $GITHUB_STEP_SUMMARY
+                  echo '## Coverage' >> "$GITHUB_STEP_SUMMARY"
+                  ./gradlew -q :koverLog | tee -a "$GITHUB_STEP_SUMMARY"
 
     benchmark:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-24.04
         steps:
-            - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  fetch-depth: 0
-                  fetch-tags: true
                   persist-credentials: false
-            - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
-              with:
-                  distribution: temurin
-                  java-version: 21
+            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
             - name: Run benchmark
               run: |
-                  echo '## Benchmark' >> $GITHUB_STEP_SUMMARY
-                  ./gradlew -q benchmark -PbenchmarkWarmups=1 -PbenchmarkIterations=1 | tee $GITHUB_STEP_SUMMARY
+                  echo '## Benchmark' >> "$GITHUB_STEP_SUMMARY"
+                  ./gradlew -q benchmark -PbenchmarkWarmups=1 -PbenchmarkIterations=1 | tee -a "$GITHUB_STEP_SUMMARY"
 
     build-docs:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-24.04
         steps:
-            - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  fetch-depth: 0
-                  fetch-tags: true
                   persist-credentials: false
-            - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
-              with:
-                  distribution: temurin
-                  java-version: 21
-            - run: ./gradlew :mkdocsBuild
-            - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
-              with:
-                  path: build/mkdocs
+            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+            - run: pnpm install --frozen-lockfile --loglevel warn
+            - run: mise run docs:build --version dev
 
     check-format:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            checks: write
-            issues: write
-            pull-requests: write
+        runs-on: ubuntu-24.04
         steps:
-            - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  fetch-depth: 0
-                  fetch-tags: true
                   persist-credentials: false
-            - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
+            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+            - run: pnpm install --frozen-lockfile --loglevel warn
+            - run: mise run check
+
+    check-integrity:
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
-                  distribution: temurin
-                  java-version: 21
-            - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
-              with:
-                  extra_args: --all-files --hook-stage manual
-            - if: ${{ github.event_name == 'pull_request' && always() }}
-              uses: reviewdog/action-suggester@aa38384ceb608d00f84b4690cacc83a5aba307ff # v1.24.0
-              with:
-                  tool_name: format
-                  fail_level: any
-                  filter_mode: diff_context
+                  persist-credentials: false
+            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+            - name: Verify gradle wrapper
+              run: |
+                  GRADLE_VERSION=$(grep distributionUrl gradle/wrapper/gradle-wrapper.properties \
+                    | sed 's/.*gradle-\(.*\)-bin\.zip.*/\1/')
+                  mise x "gradle@$GRADLE_VERSION" -- gradle wrapper --gradle-version "$GRADLE_VERSION"
+                  git diff --exit-code gradle/wrapper/ gradlew gradlew.bat
+            - name: Verify yarn lockfile integrity
+              env:
+                  YARN_ENABLE_HARDENED_MODE: "1"
+              run: ./gradlew kotlinNpmInstall
 
     # stub to use as a "required" check on github
     all-good:
-        needs: [build, check-format, build-docs, benchmark]
-        runs-on: ubuntu-latest
+        needs: [build, check-format, build-docs, benchmark, check-integrity]
+        runs-on: ubuntu-24.04
         steps:
             - run: echo 'All checks passed!'

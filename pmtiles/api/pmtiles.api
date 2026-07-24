@@ -1,0 +1,644 @@
+public final class org/maplibre/spatialk/pmtiles/ArchiveHeader {
+	public final fun component1 ()I
+	public final fun component10-u2j9DLg ()I
+	public final fun component11 ()I
+	public final fun component12 ()I
+	public final fun component13 ()Lorg/maplibre/spatialk/pmtiles/LonLatBounds;
+	public final fun component14 ()Lorg/maplibre/spatialk/pmtiles/TileCenter;
+	public final fun component2 ()Lorg/maplibre/spatialk/pmtiles/ArchiveSection;
+	public final fun component3 ()Lorg/maplibre/spatialk/pmtiles/ArchiveSection;
+	public final fun component4 ()Lorg/maplibre/spatialk/pmtiles/ArchiveSection;
+	public final fun component5 ()Lorg/maplibre/spatialk/pmtiles/ArchiveSection;
+	public final fun component6 ()Lorg/maplibre/spatialk/pmtiles/HeaderCounts;
+	public final fun component7 ()Z
+	public final fun component8-KaDf8nc ()I
+	public final fun component9-KaDf8nc ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBounds ()Lorg/maplibre/spatialk/pmtiles/LonLatBounds;
+	public final fun getCenter ()Lorg/maplibre/spatialk/pmtiles/TileCenter;
+	public final fun getCounts ()Lorg/maplibre/spatialk/pmtiles/HeaderCounts;
+	public final fun getInternalCompression-KaDf8nc ()I
+	public final fun getLeafDirectories ()Lorg/maplibre/spatialk/pmtiles/ArchiveSection;
+	public final fun getMaxZoom ()I
+	public final fun getMetadata ()Lorg/maplibre/spatialk/pmtiles/ArchiveSection;
+	public final fun getMinZoom ()I
+	public final fun getRootDirectory ()Lorg/maplibre/spatialk/pmtiles/ArchiveSection;
+	public final fun getSpecVersion ()I
+	public final fun getTileCompression-KaDf8nc ()I
+	public final fun getTileData ()Lorg/maplibre/spatialk/pmtiles/ArchiveSection;
+	public final fun getTileType-u2j9DLg ()I
+	public fun hashCode ()I
+	public final fun isClustered ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveLimits {
+	public static final field Companion Lorg/maplibre/spatialk/pmtiles/ArchiveLimits$Companion;
+	public fun <init> ()V
+	public final fun getMaxDirectoryCompressedBytes-s-VKNKU ()J
+	public final fun getMaxDirectoryDecompressedBytes-s-VKNKU ()J
+	public final fun getMaxDirectoryDepth ()I
+	public final fun getMaxDirectoryEntries ()I
+	public final fun getMaxInitialReadBytes-s-VKNKU ()J
+	public final fun getMaxLeafDirectoryCacheEntries ()I
+	public final fun getMaxMetadataBytes-s-VKNKU ()J
+	public final fun getMaxTileCompressedBytes-s-VKNKU ()J
+	public final fun getMaxTileDecompressedBytes-s-VKNKU ()J
+	public final fun getMaxVarintBytes ()I
+	public final fun toBuilder ()Lorg/maplibre/spatialk/pmtiles/ArchiveLimits$Builder;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveLimits$Builder {
+	public fun <init> ()V
+	public final fun build ()Lorg/maplibre/spatialk/pmtiles/ArchiveLimits;
+	public final fun getMaxDirectoryCompressedBytes-s-VKNKU ()J
+	public final fun getMaxDirectoryDecompressedBytes-s-VKNKU ()J
+	public final fun getMaxDirectoryDepth ()I
+	public final fun getMaxInitialReadBytes-s-VKNKU ()J
+	public final fun getMaxLeafDirectoryCacheEntries ()I
+	public final fun getMaxMetadataBytes-s-VKNKU ()J
+	public final fun getMaxTileCompressedBytes-s-VKNKU ()J
+	public final fun getMaxTileDecompressedBytes-s-VKNKU ()J
+	public final fun getMaxVarintBytes ()I
+	public final fun setMaxDirectoryCompressedBytes-VKZWuLQ (J)V
+	public final fun setMaxDirectoryDecompressedBytes-VKZWuLQ (J)V
+	public final fun setMaxDirectoryDepth (I)V
+	public final fun setMaxInitialReadBytes-VKZWuLQ (J)V
+	public final fun setMaxLeafDirectoryCacheEntries (I)V
+	public final fun setMaxMetadataBytes-VKZWuLQ (J)V
+	public final fun setMaxTileCompressedBytes-VKZWuLQ (J)V
+	public final fun setMaxTileDecompressedBytes-VKZWuLQ (J)V
+	public final fun setMaxVarintBytes (I)V
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveLimits$Companion {
+	public final fun build (Lkotlin/jvm/functions/Function1;)Lorg/maplibre/spatialk/pmtiles/ArchiveLimits;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveMetadata {
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAttribution ()Ljava/lang/String;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEncoding ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public final fun getVectorLayersJson ()Ljava/lang/String;
+	public final fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveOpenOptions {
+	public static final field Companion Lorg/maplibre/spatialk/pmtiles/ArchiveOpenOptions$Companion;
+	public fun <init> ()V
+	public final fun getLimits ()Lorg/maplibre/spatialk/pmtiles/ArchiveLimits;
+	public final fun getValidationMode ()Lorg/maplibre/spatialk/pmtiles/ValidationMode;
+	public final fun toBuilder ()Lorg/maplibre/spatialk/pmtiles/ArchiveOpenOptions$Builder;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveOpenOptions$Builder {
+	public fun <init> ()V
+	public final fun build ()Lorg/maplibre/spatialk/pmtiles/ArchiveOpenOptions;
+	public final fun decompressor-ufaZu8k (ILorg/maplibre/spatialk/pmtiles/Decompressor;)Lorg/maplibre/spatialk/pmtiles/ArchiveOpenOptions$Builder;
+	public final fun getLimits ()Lorg/maplibre/spatialk/pmtiles/ArchiveLimits;
+	public final fun getValidationMode ()Lorg/maplibre/spatialk/pmtiles/ValidationMode;
+	public final fun setLimits (Lorg/maplibre/spatialk/pmtiles/ArchiveLimits;)V
+	public final fun setValidationMode (Lorg/maplibre/spatialk/pmtiles/ValidationMode;)V
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveOpenOptions$Companion {
+	public final fun build (Lkotlin/jvm/functions/Function1;)Lorg/maplibre/spatialk/pmtiles/ArchiveOpenOptions;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveSection {
+	public final fun component1-s-VKNKU ()J
+	public final fun component2-s-VKNKU ()J
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLength-s-VKNKU ()J
+	public final fun getOffset-s-VKNKU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveTile {
+	public final fun component1 ()J
+	public final fun component2 ()Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public final fun component3 ()Lkotlinx/io/bytestring/ByteString;
+	public final fun component4-u2j9DLg ()I
+	public final fun component5-KaDf8nc ()I
+	public final fun component6 ()Z
+	public final fun component7 ()Lorg/maplibre/spatialk/pmtiles/TileRange;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCompression-KaDf8nc ()I
+	public final fun getCoord ()Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public final fun getPayload ()Lkotlinx/io/bytestring/ByteString;
+	public final fun getRange ()Lorg/maplibre/spatialk/pmtiles/TileRange;
+	public final fun getTileId ()J
+	public final fun getTileType-u2j9DLg ()I
+	public final fun getWasDecompressed ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWarning {
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-2ZufaJg ()I
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode-2ZufaJg ()I
+	public final fun getContext ()Ljava/lang/String;
+	public final fun getMessage ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWarningCode {
+	public static final synthetic fun box-impl (I)Lorg/maplibre/spatialk/pmtiles/ArchiveWarningCode;
+	public static fun constructor-impl (I)I
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (ILjava/lang/Object;)Z
+	public static final fun equals-impl0 (II)Z
+	public final fun getCode-pVg5ArA ()I
+	public fun hashCode ()I
+	public static fun hashCode-impl (I)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (I)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWarningCodes {
+	public static final field INSTANCE Lorg/maplibre/spatialk/pmtiles/ArchiveWarningCodes;
+	public final fun getEmptyRootDirectory-2ZufaJg ()I
+	public final fun getInvalidMetadataRecovered-2ZufaJg ()I
+	public final fun getMissingVectorLayers-2ZufaJg ()I
+	public final fun getNestedLeafDirectory-2ZufaJg ()I
+	public final fun getNonCanonicalSectionOrder-2ZufaJg ()I
+	public final fun getUnknownCompressionCode-2ZufaJg ()I
+	public final fun getUnknownCount-2ZufaJg ()I
+	public final fun getUnknownTileType-2ZufaJg ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteBounds {
+	public fun <init> ()V
+	public fun <init> (DDDD)V
+	public final fun component1 ()D
+	public final fun component2 ()D
+	public final fun component3 ()D
+	public final fun component4 ()D
+	public final fun copy (DDDD)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteBounds;
+	public static synthetic fun copy$default (Lorg/maplibre/spatialk/pmtiles/ArchiveWriteBounds;DDDDILjava/lang/Object;)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteBounds;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEast ()D
+	public final fun getNorth ()D
+	public final fun getSouth ()D
+	public final fun getWest ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteCenter {
+	public fun <init> ()V
+	public fun <init> (DDI)V
+	public final fun component1 ()D
+	public final fun component2 ()D
+	public final fun component3 ()I
+	public final fun copy (DDI)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteCenter;
+	public static synthetic fun copy$default (Lorg/maplibre/spatialk/pmtiles/ArchiveWriteCenter;DDIILjava/lang/Object;)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteCenter;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLatitude ()D
+	public final fun getLongitude ()D
+	public final fun getZoom ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteConfig {
+	public static final field Companion Lorg/maplibre/spatialk/pmtiles/ArchiveWriteConfig$Companion;
+	public fun <init> ()V
+	public final fun getBounds ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteBounds;
+	public final fun getCenter ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteCenter;
+	public final fun getMetadataJson ()Ljava/lang/String;
+	public final fun getTileType-u2j9DLg ()I
+	public final fun toBuilder ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteConfig$Builder;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteConfig$Builder {
+	public fun <init> ()V
+	public final fun build ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteConfig;
+	public final fun getBounds ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteBounds;
+	public final fun getCenter ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteCenter;
+	public final fun getMetadataJson ()Ljava/lang/String;
+	public final fun getTileType-u2j9DLg ()I
+	public final fun setBounds (Lorg/maplibre/spatialk/pmtiles/ArchiveWriteBounds;)V
+	public final fun setCenter (Lorg/maplibre/spatialk/pmtiles/ArchiveWriteCenter;)V
+	public final fun setMetadataJson (Ljava/lang/String;)V
+	public final fun setTileType-xwhYH2A (I)V
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteConfig$Companion {
+	public final fun build (Lkotlin/jvm/functions/Function1;)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteConfig;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteLimits {
+	public static final field Companion Lorg/maplibre/spatialk/pmtiles/ArchiveWriteLimits$Companion;
+	public fun <init> ()V
+	public final fun getMaxArchiveBytes-s-VKNKU ()J
+	public final fun getMaxDirectoryBytes-s-VKNKU ()J
+	public final fun getMaxMetadataBytes-s-VKNKU ()J
+	public final fun getMaxRootDirectoryBytes-s-VKNKU ()J
+	public final fun getMaxTileBytes-s-VKNKU ()J
+	public final fun toBuilder ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteLimits$Builder;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteLimits$Builder {
+	public fun <init> ()V
+	public final fun build ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteLimits;
+	public final fun getMaxArchiveBytes-s-VKNKU ()J
+	public final fun getMaxDirectoryBytes-s-VKNKU ()J
+	public final fun getMaxMetadataBytes-s-VKNKU ()J
+	public final fun getMaxRootDirectoryBytes-s-VKNKU ()J
+	public final fun getMaxTileBytes-s-VKNKU ()J
+	public final fun setMaxArchiveBytes-VKZWuLQ (J)V
+	public final fun setMaxDirectoryBytes-VKZWuLQ (J)V
+	public final fun setMaxMetadataBytes-VKZWuLQ (J)V
+	public final fun setMaxRootDirectoryBytes-VKZWuLQ (J)V
+	public final fun setMaxTileBytes-VKZWuLQ (J)V
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteLimits$Companion {
+	public final fun build (Lkotlin/jvm/functions/Function1;)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteLimits;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteOptions {
+	public static final field Companion Lorg/maplibre/spatialk/pmtiles/ArchiveWriteOptions$Companion;
+	public fun <init> ()V
+	public final fun getDeduplicateTilePayloads ()Z
+	public final fun getInternalCompression-KaDf8nc ()I
+	public final fun getLimits ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteLimits;
+	public final fun getTileCompression-KaDf8nc ()I
+	public final fun toBuilder ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteOptions$Builder;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteOptions$Builder {
+	public fun <init> ()V
+	public final fun build ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteOptions;
+	public final fun compressor-ufaZu8k (ILorg/maplibre/spatialk/pmtiles/Compressor;)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteOptions$Builder;
+	public final fun getDeduplicateTilePayloads ()Z
+	public final fun getInternalCompression-KaDf8nc ()I
+	public final fun getLimits ()Lorg/maplibre/spatialk/pmtiles/ArchiveWriteLimits;
+	public final fun getTileCompression-KaDf8nc ()I
+	public final fun setDeduplicateTilePayloads (Z)V
+	public final fun setInternalCompression-HP1yuqM (I)V
+	public final fun setLimits (Lorg/maplibre/spatialk/pmtiles/ArchiveWriteLimits;)V
+	public final fun setTileCompression-HP1yuqM (I)V
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteOptions$Companion {
+	public final fun build (Lkotlin/jvm/functions/Function1;)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteOptions;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteTile {
+	public static final field Companion Lorg/maplibre/spatialk/pmtiles/ArchiveWriteTile$Companion;
+	public synthetic fun <init> (Lorg/maplibre/spatialk/pmtiles/TileCoord;Lkotlinx/io/bytestring/ByteString;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public final fun component2 ()Lkotlinx/io/bytestring/ByteString;
+	public final fun component3-t-pKMy4 ()I
+	public final fun copy-colzN6I (Lorg/maplibre/spatialk/pmtiles/TileCoord;Lkotlinx/io/bytestring/ByteString;I)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteTile;
+	public static synthetic fun copy-colzN6I$default (Lorg/maplibre/spatialk/pmtiles/ArchiveWriteTile;Lorg/maplibre/spatialk/pmtiles/TileCoord;Lkotlinx/io/bytestring/ByteString;IILjava/lang/Object;)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteTile;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCoord ()Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public final fun getPayload ()Lkotlinx/io/bytestring/ByteString;
+	public final fun getPayloadMode-t-pKMy4 ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ArchiveWriteTile$Companion {
+	public final fun stored (Lorg/maplibre/spatialk/pmtiles/TileCoord;Lkotlinx/io/bytestring/ByteString;)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteTile;
+	public final fun uncompressed (Lorg/maplibre/spatialk/pmtiles/TileCoord;Lkotlinx/io/bytestring/ByteString;)Lorg/maplibre/spatialk/pmtiles/ArchiveWriteTile;
+}
+
+public final class org/maplibre/spatialk/pmtiles/ByteRange {
+	public final fun component1-s-VKNKU ()J
+	public final fun component2-s-VKNKU ()J
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLength-s-VKNKU ()J
+	public final fun getOffset-s-VKNKU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class org/maplibre/spatialk/pmtiles/ByteRangeSource {
+	public abstract fun read (Lorg/maplibre/spatialk/pmtiles/ByteRange;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun size-I7RO_PI (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class org/maplibre/spatialk/pmtiles/ByteSink {
+	public abstract fun close (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun flush (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun write (Lkotlinx/io/bytestring/ByteString;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class org/maplibre/spatialk/pmtiles/CompressionCode {
+	public static final synthetic fun box-impl (I)Lorg/maplibre/spatialk/pmtiles/CompressionCode;
+	public static fun constructor-impl (I)I
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (ILjava/lang/Object;)Z
+	public static final fun equals-impl0 (II)Z
+	public final fun getCode-pVg5ArA ()I
+	public fun hashCode ()I
+	public static fun hashCode-impl (I)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (I)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/CompressionCodes {
+	public static final field INSTANCE Lorg/maplibre/spatialk/pmtiles/CompressionCodes;
+	public final fun getBrotli-KaDf8nc ()I
+	public final fun getGzip-KaDf8nc ()I
+	public final fun getNone-KaDf8nc ()I
+	public final fun getUnknown-KaDf8nc ()I
+	public final fun getZstd-KaDf8nc ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/CompressionLimits {
+	public final fun component1-s-VKNKU ()J
+	public final fun component2-s-VKNKU ()J
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxCompressedBytes-s-VKNKU ()J
+	public final fun getMaxUncompressedBytes-s-VKNKU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class org/maplibre/spatialk/pmtiles/Compressor {
+	public abstract fun compress (Lkotlinx/io/bytestring/ByteString;Lorg/maplibre/spatialk/pmtiles/CompressionLimits;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class org/maplibre/spatialk/pmtiles/DecompressionLimits {
+	public final fun component1-s-VKNKU ()J
+	public final fun component2-s-VKNKU ()J
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxCompressedBytes-s-VKNKU ()J
+	public final fun getMaxDecompressedBytes-s-VKNKU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class org/maplibre/spatialk/pmtiles/Decompressor {
+	public abstract fun decompress (Lkotlinx/io/bytestring/ByteString;Lorg/maplibre/spatialk/pmtiles/DecompressionLimits;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class org/maplibre/spatialk/pmtiles/HeaderCounts {
+	public final fun component1-s-VKNKU ()J
+	public final fun component2-s-VKNKU ()J
+	public final fun component3-s-VKNKU ()J
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddressedTiles-s-VKNKU ()J
+	public final fun getTileContents-s-VKNKU ()J
+	public final fun getTileEntries-s-VKNKU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/LonLatBounds {
+	public final fun component1 ()D
+	public final fun component2 ()D
+	public final fun component3 ()D
+	public final fun component4 ()D
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEast ()D
+	public final fun getNorth ()D
+	public final fun getSouth ()D
+	public final fun getWest ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/PmTiles {
+	public static final field INSTANCE Lorg/maplibre/spatialk/pmtiles/PmTiles;
+	public final fun open (Lorg/maplibre/spatialk/pmtiles/ByteRangeSource;Lorg/maplibre/spatialk/pmtiles/ArchiveOpenOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun open$default (Lorg/maplibre/spatialk/pmtiles/PmTiles;Lorg/maplibre/spatialk/pmtiles/ByteRangeSource;Lorg/maplibre/spatialk/pmtiles/ArchiveOpenOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun write (Lorg/maplibre/spatialk/pmtiles/ByteSink;Ljava/util/List;Lorg/maplibre/spatialk/pmtiles/ArchiveWriteConfig;Lorg/maplibre/spatialk/pmtiles/ArchiveWriteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun write$default (Lorg/maplibre/spatialk/pmtiles/PmTiles;Lorg/maplibre/spatialk/pmtiles/ByteSink;Ljava/util/List;Lorg/maplibre/spatialk/pmtiles/ArchiveWriteConfig;Lorg/maplibre/spatialk/pmtiles/ArchiveWriteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun writeToByteString (Ljava/util/List;Lorg/maplibre/spatialk/pmtiles/ArchiveWriteConfig;Lorg/maplibre/spatialk/pmtiles/ArchiveWriteOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun writeToByteString$default (Lorg/maplibre/spatialk/pmtiles/PmTiles;Ljava/util/List;Lorg/maplibre/spatialk/pmtiles/ArchiveWriteConfig;Lorg/maplibre/spatialk/pmtiles/ArchiveWriteOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class org/maplibre/spatialk/pmtiles/PmTilesArchive : java/lang/AutoCloseable {
+	public fun close ()V
+	public final fun containsTile (IIILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun containsTile (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun containsTile (Lorg/maplibre/spatialk/pmtiles/TileCoord;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun findTileRange (IIILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun findTileRange (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun findTileRange (Lorg/maplibre/spatialk/pmtiles/TileCoord;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getHeader ()Lorg/maplibre/spatialk/pmtiles/ArchiveHeader;
+	public final fun getInternalCompression-KaDf8nc ()I
+	public final fun getTileCompression-KaDf8nc ()I
+	public final fun getTileType-u2j9DLg ()I
+	public final fun getWarnings ()Ljava/util/List;
+	public final fun metadata (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun rawMetadataJson (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun readDecompressedTile (IIILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun readDecompressedTile (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun readDecompressedTile (Lorg/maplibre/spatialk/pmtiles/TileCoord;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun readDecompressedTiles (Ljava/util/List;Lorg/maplibre/spatialk/pmtiles/TileReadCoalescing;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun readDecompressedTiles$default (Lorg/maplibre/spatialk/pmtiles/PmTilesArchive;Ljava/util/List;Lorg/maplibre/spatialk/pmtiles/TileReadCoalescing;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun readStoredTile (IIILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun readStoredTile (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun readStoredTile (Lorg/maplibre/spatialk/pmtiles/TileCoord;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun readStoredTiles (Ljava/util/List;Lorg/maplibre/spatialk/pmtiles/TileReadCoalescing;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun readStoredTiles$default (Lorg/maplibre/spatialk/pmtiles/PmTilesArchive;Ljava/util/List;Lorg/maplibre/spatialk/pmtiles/TileReadCoalescing;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class org/maplibre/spatialk/pmtiles/PmTilesErrorCode {
+	public static final synthetic fun box-impl (I)Lorg/maplibre/spatialk/pmtiles/PmTilesErrorCode;
+	public static fun constructor-impl (I)I
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (ILjava/lang/Object;)Z
+	public static final fun equals-impl0 (II)Z
+	public final fun getCode-pVg5ArA ()I
+	public fun hashCode ()I
+	public static fun hashCode-impl (I)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (I)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/PmTilesErrorCodes {
+	public static final field INSTANCE Lorg/maplibre/spatialk/pmtiles/PmTilesErrorCodes;
+	public final fun getClosed-CzqsQYw ()I
+	public final fun getCompressionFailed-CzqsQYw ()I
+	public final fun getDecompressionFailed-CzqsQYw ()I
+	public final fun getInvalidDirectory-CzqsQYw ()I
+	public final fun getInvalidHeader-CzqsQYw ()I
+	public final fun getInvalidMagic-CzqsQYw ()I
+	public final fun getInvalidMetadata-CzqsQYw ()I
+	public final fun getInvalidRootDirectoryLocation-CzqsQYw ()I
+	public final fun getInvalidSectionLayout-CzqsQYw ()I
+	public final fun getInvalidTileCoordinate-CzqsQYw ()I
+	public final fun getInvalidTileInput-CzqsQYw ()I
+	public final fun getInvalidVarint-CzqsQYw ()I
+	public final fun getLimitExceeded-CzqsQYw ()I
+	public final fun getRangeOutOfBounds-CzqsQYw ()I
+	public final fun getSinkUnavailable-CzqsQYw ()I
+	public final fun getSourceUnavailable-CzqsQYw ()I
+	public final fun getUnsupportedCompression-CzqsQYw ()I
+	public final fun getUnsupportedVersion-CzqsQYw ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/PmTilesException : java/lang/Exception {
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getCode-CzqsQYw ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileCenter {
+	public final fun component1 ()D
+	public final fun component2 ()D
+	public final fun component3 ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLatitude ()D
+	public final fun getLongitude ()D
+	public final fun getZoom ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileCoord {
+	public fun <init> (III)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (III)Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public static synthetic fun copy$default (Lorg/maplibre/spatialk/pmtiles/TileCoord;IIIILjava/lang/Object;)Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getX ()I
+	public final fun getY ()I
+	public final fun getZ ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public final fun toTileId ()J
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileIds {
+	public static final field INSTANCE Lorg/maplibre/spatialk/pmtiles/TileIds;
+	public final fun fromZxy (III)J
+	public final fun toZxy (J)Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public final fun zoomStart (I)J
+}
+
+public final class org/maplibre/spatialk/pmtiles/TilePayloadMode {
+	public static final synthetic fun box-impl (I)Lorg/maplibre/spatialk/pmtiles/TilePayloadMode;
+	public static fun constructor-impl (I)I
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (ILjava/lang/Object;)Z
+	public static final fun equals-impl0 (II)Z
+	public final fun getCode-pVg5ArA ()I
+	public fun hashCode ()I
+	public static fun hashCode-impl (I)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (I)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/TilePayloadModes {
+	public static final field INSTANCE Lorg/maplibre/spatialk/pmtiles/TilePayloadModes;
+	public final fun getStored-t-pKMy4 ()I
+	public final fun getUncompressed-t-pKMy4 ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileRange {
+	public final fun component1 ()J
+	public final fun component2 ()Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public final fun component3 ()Lorg/maplibre/spatialk/pmtiles/ByteRange;
+	public final fun component4-u2j9DLg ()I
+	public final fun component5-KaDf8nc ()I
+	public final fun component6 ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getArchiveRange ()Lorg/maplibre/spatialk/pmtiles/ByteRange;
+	public final fun getCompression-KaDf8nc ()I
+	public final fun getCoord ()Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public final fun getDirectoryDepth ()I
+	public final fun getTileId ()J
+	public final fun getTileType-u2j9DLg ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileReadCoalescing {
+	public static final field Companion Lorg/maplibre/spatialk/pmtiles/TileReadCoalescing$Companion;
+	public fun <init> ()V
+	public final fun getMaxCoalescedBytes-s-VKNKU ()J
+	public final fun getMaxGapBytes-s-VKNKU ()J
+	public final fun toBuilder ()Lorg/maplibre/spatialk/pmtiles/TileReadCoalescing$Builder;
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileReadCoalescing$Builder {
+	public fun <init> ()V
+	public final fun build ()Lorg/maplibre/spatialk/pmtiles/TileReadCoalescing;
+	public final fun getMaxCoalescedBytes-s-VKNKU ()J
+	public final fun getMaxGapBytes-s-VKNKU ()J
+	public final fun setMaxCoalescedBytes-VKZWuLQ (J)V
+	public final fun setMaxGapBytes-VKZWuLQ (J)V
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileReadCoalescing$Companion {
+	public final fun build (Lkotlin/jvm/functions/Function1;)Lorg/maplibre/spatialk/pmtiles/TileReadCoalescing;
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileReadResult {
+	public final fun component1 ()Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public final fun component2 ()Lorg/maplibre/spatialk/pmtiles/ArchiveTile;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCoord ()Lorg/maplibre/spatialk/pmtiles/TileCoord;
+	public final fun getTile ()Lorg/maplibre/spatialk/pmtiles/ArchiveTile;
+	public fun hashCode ()I
+	public final fun isFound ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileTypeCode {
+	public static final synthetic fun box-impl (I)Lorg/maplibre/spatialk/pmtiles/TileTypeCode;
+	public static fun constructor-impl (I)I
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (ILjava/lang/Object;)Z
+	public static final fun equals-impl0 (II)Z
+	public final fun getCode-pVg5ArA ()I
+	public fun hashCode ()I
+	public static fun hashCode-impl (I)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (I)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/TileTypeCodes {
+	public static final field INSTANCE Lorg/maplibre/spatialk/pmtiles/TileTypeCodes;
+	public final fun getAvif-u2j9DLg ()I
+	public final fun getJpeg-u2j9DLg ()I
+	public final fun getMlt-u2j9DLg ()I
+	public final fun getMvt-u2j9DLg ()I
+	public final fun getPng-u2j9DLg ()I
+	public final fun getUnknown-u2j9DLg ()I
+	public final fun getWebp-u2j9DLg ()I
+}
+
+public final class org/maplibre/spatialk/pmtiles/ValidationMode : java/lang/Enum {
+	public static final field Lenient Lorg/maplibre/spatialk/pmtiles/ValidationMode;
+	public static final field Strict Lorg/maplibre/spatialk/pmtiles/ValidationMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lorg/maplibre/spatialk/pmtiles/ValidationMode;
+	public static fun values ()[Lorg/maplibre/spatialk/pmtiles/ValidationMode;
+}
+

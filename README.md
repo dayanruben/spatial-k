@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/github/license/maplibre/spatial-k?label=License)](https://github.com/maplibre/spatial-k/blob/main/LICENSE)
 [![Kotlin Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmaplibre%2Fspatial-k%2Frefs%2Fheads%2Fmain%2Fgradle%2Flibs.versions.toml&query=versions.kotlin&prefix=v&logo=kotlin&label=Kotlin)](./gradle/libs.versions.toml)
 [![Documentation](https://img.shields.io/badge/Documentation-blue?logo=MaterialForMkDocs&logoColor=white)](https://maplibre.org/spatial-k/)
-[![API Reference](https://img.shields.io/badge/API_Reference-blue?logo=Kotlin&logoColor=white)](https://maplibre.org/spatial-k/api/)
+[![API Reference](https://img.shields.io/badge/API_Reference-blue?logo=Kotlin&logoColor=white)](https://maplibre.org/spatial-k/api/dokka/)
 [![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack&logoColor=white)](https://osmus.slack.com/archives/maplibre)
 
 ## Introduction
@@ -17,6 +17,9 @@ It includes:
 - GeoJSON implementation and DSL for building GeoJSON objects
 - Port of Turf.js geospatial analysis functions in pure Kotlin
 - Library for working with units of measure
+- GPX implementation
+- PMTiles v3 archive reader
+- Google Encoded Polyline Algorithm support
 
 Spatial K supports Kotlin Multiplatform and Java projects.
 
@@ -29,6 +32,9 @@ dependencies {
     implementation("org.maplibre.spatialk:geojson:VERSION")
     implementation("org.maplibre.spatialk:turf:VERSION")
     implementation("org.maplibre.spatialk:units:VERSION")
+    implementation("org.maplibre.spatialk:gpx:VERSION")
+    implementation("org.maplibre.spatialk:pmtiles:VERSION")
+    implementation("org.maplibre.spatialk:polyline-encoding:VERSION")
 }
 ```
 
@@ -62,12 +68,45 @@ val inMeters = distance.inMeters     // 5000.0
 val formatted = distance.toString()  // "5000 m"
 ```
 
+### GPX
+
+```kotlin
+val document = Document(
+    metadata = Metadata(name = "My GPX File"),
+    waypoints = listOf(
+        Waypoint(latitude = 1.0, longitude = 2.0),
+        Waypoint(latitude = 3.0, longitude = 4.0),
+    ),
+)
+val gpxString = Gpx.encodeToString(document)
+```
+
+### PMTiles
+
+```kotlin
+// Inside a suspend function or coroutine scope:
+PmTiles.open(source).use { archive ->
+    val header = archive.header
+    val tile = archive.readDecompressedTile(z = 0, x = 0, y = 0)
+}
+```
+
+### Polyline Encoding
+
+```kotlin
+val positions = listOf(
+    Position(longitude = -120.2, latitude = 38.5),
+    Position(longitude = -120.95, latitude = 40.7),
+)
+val encoded = PolylineEncoding.encode(positions)
+val decoded = PolylineEncoding.decode(encoded)
+```
+
 See the [project site](https://maplibre.org/spatial-k/) for more info.
 
 ## Getting Involved
 
-Join the [#maplibre Slack channel](https://osmus.slack.com/archives/maplibre) at
-OSMUS (get an invite at https://slack.openstreetmap.us/).
+Join the [#maplibre Slack channel](https://osmus.slack.com/archives/maplibre) at OSMUS (get an
+invite at https://slack.openstreetmap.us/).
 
-Read the [CONTRIBUTING.md](CONTRIBUTING.md) guide to get familiar with how we do
-things around here.
+Read the [CONTRIBUTING.md](CONTRIBUTING.md) guide to get familiar with how we do things around here.

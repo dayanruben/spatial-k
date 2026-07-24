@@ -1,72 +1,96 @@
-# Agent Guidelines for Spatial K
+## AI policy
 
-## Module Overview
+This project is a set of Kotlin Multiplatform libraries for working with geospatial data. Each
+module is a distinct library.
 
-- `geojson` - GeoJSON implementation and DSL for building GeoJSON objects
-- `turf` - Port of Turf.js geospatial analysis functions in pure Kotlin
-- `units` - Library for working with units of measure
-- `testutil` - Shared testing utilities and resource loading helpers
+## Project map
 
-## Build/Test Commands
+- `geojson` — GeoJSON types and DSL
+- `turf` — geospatial analysis (port of Turf.js)
+- `units` — units of measure
+- `gpx` — GPX format support
+- `pmtiles` — PMTiles v3 archive reader
+- `polyline-encoding` — Google Encoded Polyline Algorithm
+- `testutil` — shared test helpers
+- `benchmark` — performance benchmarks
+- `docs` — API documentation
 
-- `./gradlew build` - Compile and run all checks across platforms
-- `./gradlew jvmTest` - Run JVM tests only
-- `./gradlew jsNodeTest` - Run JS tests
-- `./gradlew wasmJsNodeTest` - Run WASM tests
-- `./gradlew :geojson:jvmTest --tests "*SpecificTest*"` - Run single test
-- `./gradlew :koverHtmlReport` - Generate coverage report
-- `./gradlew updateLegacyAbi` - Dump JVM and KLIB ABI after API changes
-- `./gradlew :mkdocsBuild` - Build and check MkDocs documentation
-- `./gradlew detekt` - Check for undocumented public APIs
-- `pre-commit run --all-files --hook-stage manual`
-    - Run this command before committing changes to ensure code formatting and
-      ABI compliance.
+## Reference resources
 
-## Build Organization
+- GeoJSON: [RFC 7946](https://www.rfc-editor.org/rfc/rfc7946).
+- Turf: [Turf.js docs](https://turfjs.org/docs/) and
+  [source repository](https://github.com/Turfjs/turf).
+- Units: [BIPM SI Brochure](https://www.bipm.org/en/publications/si-brochure) and
+  [NIST SI units guide](https://www.nist.gov/pml/weights-and-measures/metric-si/si-units).
+- GPX: [GPX 1.1 schema documentation](https://www.topografix.com/gpx/1/1/) and
+  [XSD](https://www.topografix.com/GPX/1/1/gpx.xsd).
+- PMTiles v3: [spec](https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec.md),
+  [changelog](https://github.com/protomaps/PMTiles/blob/main/spec/v3/CHANGELOG.md),
+  [Protomaps docs](https://docs.protomaps.com/pmtiles/), and
+  [go-pmtiles](https://github.com/protomaps/go-pmtiles).
+- Polyline encoding:
+  [Google Encoded Polyline Algorithm Format](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
+- Kotlin interop:
+  [Objective-C and Swift interop](https://kotlinlang.org/docs/native-objc-interop.html#importing-swift-objective-c-libraries-to-kotlin),
+  [Swift export](https://kotlinlang.org/docs/native-swift-export.html),
+  [C interop](https://kotlinlang.org/docs/native-c-interop.html),
+  [JS interop](https://kotlinlang.org/docs/js-interop.html),
+  [JS to Kotlin interop](https://kotlinlang.org/docs/js-to-kotlin-interop.html),
+  [Java interop](https://kotlinlang.org/docs/java-interop.html), and
+  [Java to Kotlin interop](https://kotlinlang.org/docs/java-to-kotlin-interop.html).
 
-- Convention plugins in `buildSrc/src/main/kotlin/` configure common behavior
-- `base-module.gradle.kts` - Kotlin setup with JVM toolchain and Java target
-- `multiplatform-module.gradle.kts` - Extend base module with all supported
-  multiplatform targets
-- `published-library.gradle.kts` - Maven publishing, Dokka, Kover, and ABI
-  validation
-- `test-resources.gradle.kts` - Resource loading for test files
-- Documentation uses Material for MkDocs in `docs/` directory
+## Workflow
 
-## Code Style Guidelines
+```bash
+# Install/refresh all tools
+mise install
 
-- Public APIs use `public` modifier explicitly
-- Package structure: `org.maplibre.spatialk.{module}`
-- Use kotlinx.serialization for JSON handling
-- Some tests use resource files from `src/commonTest/resources/` for JSON data
-- Mobile/browser tests disabled due to file system resource loading limitations
-- For floating-point comparisons in tests, use helpers from `testutil` instead
-  of `assertEquals()` to handle platform-specific precision differences
-- When writing KDoc comments, prefer adding imports over writing fully qualified
-  names
+# List available tasks across the workspace
+mise tasks --all
 
-## Commit Guidelines
+# Compile all platforms, also run Detekt
+mise run build
 
-Never make a commit unless explicitly asked to do so. Such permission only
-extends to that one commit, not to future commits in that session.
+# Run all tests (JVM, JS, WASM, native)
+mise run test
 
-When making commits, always include a signoff in the commit message following
-this format:
+# Test specific platforms
+mise run test:jvm
+mise run test:jsnode
+mise run test:wasmjsnode
+mise run test:native
 
+# Run formatters and linters on _all_ files (will stage affected files)
+mise run fix
+
+# Run formatters and linters on targeted files (will stage affected files)
+hk fix [FILES...]
+
+# Run a specific JVM test
+mise exec -- ./gradlew :module:jvmTest --tests "*SomeTest*"
 ```
-🤖 Generated with [Agent Name](https://agent-url)
 
-Co-Authored-By: Agent Name <example@agent-domain>
-```
+Formatters and linters run automatically on pre-commit; you usually don't need to run them manually.
 
-Examples:
+The environment is managed by mise, so if you need to run a command that's not already a mise task,
+use `mise exec -- <command>`.
 
-- Claude: `🤖 Generated with [Claude Code](https://claude.com/claude-code)` and
-  `Co-Authored-By: Claude <noreply@anthropic.com>`
-- OpenCode: `🤖 Generated with [OpenCode](https://opencode.ai)` and
-  `Co-Authored-By: OpenCode <noreply@opencode.ai>`
-- Amp: `🤖 Generated with [Amp](https://ampcode.com)` and
-  `Co-Authored-By: Amp <amp@ampcode.com>`
+## Project invariants
 
-Each coding agent should use their own Author and URL but maintain the same
-format.
+### Testing
+
+- For floating-point comparisons in tests, use helpers from `testutil` instead of `assertEquals` to
+  handle platform-specific precision differences.
+- Foreign export tests don't need full coverage; they're primarily about proving the api is usable
+  in that language.
+
+### API design
+
+- Design for ObjC export (used in Swift) without damaging the Kotlin API ergonomics.
+- Avoid Kotlin idioms that create unusable foreign APIs, but do not make Kotlin awkward just to
+  perfect a foreign-language call site.
+- Hide Kotlin-only helpers from foreign APIs with `@HiddenFromObjC`/similar annotations.
+- Option bags that may grow over time use a builder DSL rather than public constructor with
+  defaults.
+- Enum-like values which may grow over time without breaking spec changes should be defined as
+  inline `value class`, not `enum class`.
