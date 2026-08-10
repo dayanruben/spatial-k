@@ -124,7 +124,7 @@ jobs:
                           latest_release='v0.0.0'
                       fi
                   fi
-                  if ! version="$(mise run --quiet publish:version \
+                  if ! version="$(bash ./mise-tasks/publish/version \
                       --ref-type "$REF_TYPE" \
                       --ref-name "$REF_NAME" \
                       --latest-release "$latest_release")"; then
