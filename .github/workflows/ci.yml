@@ -23,10 +23,12 @@ jobs:
                       task: macosArm64Test
         runs-on: ${{ matrix.runner }}
         steps:
-            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
                   persist-credentials: false
-            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+            - uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
+              with:
+                  version: 2026.6.0
             - run: ./gradlew version # TODO: remove this once we're confident in our config
             - run: ./gradlew "${{ matrix.task }}"
             - if: ${{ matrix.task == 'macosArm64Test' }}
@@ -40,10 +42,12 @@ jobs:
     benchmark:
         runs-on: ubuntu-24.04
         steps:
-            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
                   persist-credentials: false
-            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+            - uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
+              with:
+                  version: 2026.6.0
             - name: Run benchmark
               run: |
                   echo '## Benchmark' >> "$GITHUB_STEP_SUMMARY"
@@ -52,30 +56,34 @@ jobs:
     build-docs:
         runs-on: ubuntu-24.04
         steps:
-            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
                   persist-credentials: false
-            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
-            - run: pnpm install --frozen-lockfile --loglevel warn
+            - uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
+              with:
+                  version: 2026.6.0
             - run: mise run docs:build --version dev
 
     check-format:
         runs-on: ubuntu-24.04
         steps:
-            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
                   persist-credentials: false
-            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
-            - run: pnpm install --frozen-lockfile --loglevel warn
+            - uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
+              with:
+                  version: 2026.6.0
             - run: mise run check
 
     check-integrity:
         runs-on: ubuntu-24.04
         steps:
-            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
                   persist-credentials: false
-            - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+            - uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
+              with:
+                  version: 2026.6.0
             - name: Verify gradle wrapper
               run: |
                   GRADLE_VERSION=$(grep distributionUrl gradle/wrapper/gradle-wrapper.properties \
