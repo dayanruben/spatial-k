@@ -91,18 +91,22 @@ jobs:
                       fi
 
                       if [ -z "$latest_release" ]; then
-                          if upstream_tags="$(gh api "/repos/${upstream_repo:-$REPOSITORY}/tags?per_page=100" --jq '.[].name' 2>/dev/null)"; then
-                              latest_release="$(
-                                  printf '%s\n' "$upstream_tags" |
-                                      sed -nE 's/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/v\1.\2.\3/p' |
-                                      sort -V |
-                                      tail -n 1
-                              )"
+                          if [ -n "$upstream_repo" ]; then
+                              if git_tags="$(git ls-remote --tags --refs "https://github.com/$upstream_repo.git" "v*" 2>/dev/null)"; then
+                                  latest_release="$(
+                                      printf '%s\n' "$git_tags" |
+                                          awk '{print $2}' |
+                                          sed "s#^refs/tags/##" |
+                                          sed -nE "s/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/v\1.\2.\3/p" |
+                                          sort -V |
+                                          tail -n 1
+                                  )"
+                              fi
                           fi
                       fi
 
                       if [ -z "$latest_release" ]; then
-                          if git_tags="$(git ls-remote --tags --refs origin "v*" 2>/dev/null)"; then
+                          if git_tags="$(git ls-remote --tags --refs "https://github.com/$REPOSITORY.git" "v*" 2>/dev/null)"; then
                               latest_release="$(
                                   printf '%s\n' "$git_tags" |
                                       awk '{print $2}' |
