@@ -91,23 +91,27 @@ jobs:
                       fi
 
                       if [ -z "$latest_release" ]; then
-                          latest_release="$(
-                              gh api "/repos/${upstream_repo:-$REPOSITORY}/tags?per_page=100" --jq '.[].name' 2>/dev/null |
-                                  sed -nE 's/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/v\1.\2.\3/p' |
-                                  sort -V |
-                                  tail -n 1
-                          )"
+                          if upstream_tags="$(gh api "/repos/${upstream_repo:-$REPOSITORY}/tags?per_page=100" --jq '.[].name' 2>/dev/null)"; then
+                              latest_release="$(
+                                  printf '%s\n' "$upstream_tags" |
+                                      sed -nE 's/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/v\1.\2.\3/p' |
+                                      sort -V |
+                                      tail -n 1
+                              )"
+                          fi
                       fi
 
                       if [ -z "$latest_release" ]; then
-                          latest_release="$(
-                              git ls-remote --tags --refs origin "v*" |
-                                  awk '{print $2}' |
-                                  sed "s#^refs/tags/##" |
-                                  sed -nE "s/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/v\1.\2.\3/p" |
-                                  sort -V |
-                                  tail -n 1
-                          )"
+                          if git_tags="$(git ls-remote --tags --refs origin "v*" 2>/dev/null)"; then
+                              latest_release="$(
+                                  printf '%s\n' "$git_tags" |
+                                      awk '{print $2}' |
+                                      sed "s#^refs/tags/##" |
+                                      sed -nE "s/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/v\1.\2.\3/p" |
+                                      sort -V |
+                                      tail -n 1
+                              )"
+                          fi
                       fi
 
                       if [ -z "$latest_release" ]; then
