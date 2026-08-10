@@ -76,16 +76,24 @@ jobs:
                   version: 2026.6.0
             - id: version
               run: |
+
                   latest_release=""
                   if [ "$REF_TYPE:$REF_NAME" = "branch:main" ]; then
-                      latest_release="$(
-                          git ls-remote --tags --refs origin "v*" |
-                              awk '{print $2}' |
-                              sed "s#^refs/tags/##" |
-                              sed -nE "s/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/v\1.\2.\3/p" |
-                              sort -V |
-                              tail -n 1
-                      )"
+                      latest_release="$(gh api "/repos/$REPOSITORY/releases/latest" --jq '.tag_name // empty' 2>/dev/null || true)"
+                      if [ -z "$latest_release" ]; then
+                          latest_release="$(
+                              git ls-remote --tags --refs origin "v*" |
+                                  awk '{print $2}' |
+                                  sed "s#^refs/tags/##" |
+                                  sed -nE "s/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/v\1.\2.\3/p" |
+                                  sort -V |
+                                  tail -n 1
+                          )"
+                      fi
+                      if [ -z "$latest_release" ]; then
+                          echo "Error: unable to resolve latest release for main branch" >&2
+                          exit 1
+                      fi
                   fi
                   version="$(
                       mise run --quiet publish:version \
@@ -95,7 +103,6 @@ jobs:
                   )"
                   echo "spatial_k_version=$version" >> "$GITHUB_OUTPUT"
                   echo "latest_release=$latest_release" >> "$GITHUB_OUTPUT"
-
     publish-maven:
         runs-on: ubuntu-24.04
         needs: [resolve-version]
