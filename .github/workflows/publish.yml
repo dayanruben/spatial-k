@@ -81,6 +81,22 @@ jobs:
                   if [ "$REF_TYPE:$REF_NAME" = "branch:main" ]; then
                       latest_release="$(gh api "/repos/$REPOSITORY/releases/latest" --jq '.tag_name // empty' 2>/dev/null || true)"
                       if [ -z "$latest_release" ]; then
+                          upstream_repo="$(gh api "/repos/$REPOSITORY" --jq '.parent.full_name // empty' 2>/dev/null || true)"
+                          if [ -n "$upstream_repo" ]; then
+                              latest_release="$(gh api "/repos/$upstream_repo/releases/latest" --jq '.tag_name // empty' 2>/dev/null || true)"
+                          fi
+                      fi
+
+                      if [ -z "$latest_release" ]; then
+                          latest_release="$(
+                              gh api "/repos/${upstream_repo:-$REPOSITORY}/tags?per_page=100" --jq '.[].name' 2>/dev/null |
+                                  sed -nE 's/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/v\1.\2.\3/p' |
+                                  sort -V |
+                                  tail -n 1
+                          )"
+                      fi
+
+                      if [ -z "$latest_release" ]; then
                           latest_release="$(
                               git ls-remote --tags --refs origin "v*" |
                                   awk '{print $2}' |
@@ -90,6 +106,7 @@ jobs:
                                   tail -n 1
                           )"
                       fi
+
                       if [ -z "$latest_release" ]; then
                           echo "Error: unable to resolve latest release for main branch" >&2
                           exit 1
