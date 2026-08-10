@@ -120,8 +120,8 @@ jobs:
                       fi
 
                       if [ -z "$latest_release" ]; then
-                          echo "Error: unable to resolve latest release for main branch" >&2
-                          exit 1
+                          echo "Warning: unable to resolve latest release for main branch" >&2
+                          latest_release='v0.0.0'
                       fi
                   fi
                   version="$(
