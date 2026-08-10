@@ -124,10 +124,10 @@ jobs:
                           latest_release='v0.0.0'
                       fi
                   fi
-                  if ! version="$(bash ./mise-tasks/publish/version \
-                      --ref-type "$REF_TYPE" \
-                      --ref-name "$REF_NAME" \
-                      --latest-release "$latest_release")"; then
+                  if ! version="$(usage_ref_type="$REF_TYPE" \
+                      usage_ref_name="$REF_NAME" \
+                      usage_latest_release="$latest_release" \
+                      bash ./mise-tasks/publish/version)"; then
                       if [ "$REF_TYPE:$REF_NAME" = "branch:main" ]; then
                           version="0.1.0-SNAPSHOT"
                           echo "Warning: publish:version failed for main branch; using fallback $version." >&2
