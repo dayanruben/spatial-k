@@ -79,11 +79,14 @@ jobs:
 
                   latest_release=""
                   if [ "$REF_TYPE:$REF_NAME" = "branch:main" ]; then
-                      latest_release="$(gh api "/repos/$REPOSITORY/releases/latest" --jq '.tag_name // empty' 2>/dev/null || true)"
+                      if release_json="$(gh api "/repos/$REPOSITORY/releases/latest" 2>/dev/null)"; then
+                          latest_release="$(printf '%s' "$release_json" | jq -r '.tag_name // empty')"
+                      fi
+
                       if [ -z "$latest_release" ]; then
-                          upstream_repo="$(gh api "/repos/$REPOSITORY" --jq '.parent.full_name // empty' 2>/dev/null || true)"
-                          if [ -n "$upstream_repo" ]; then
-                              latest_release="$(gh api "/repos/$upstream_repo/releases/latest" --jq '.tag_name // empty' 2>/dev/null || true)"
+                          upstream_repo="$(gh api "/repos/$REPOSITORY" --jq '.parent.full_name // ""' 2>/dev/null)"
+                          if [ -n "$upstream_repo" ] && release_json="$(gh api "/repos/$upstream_repo/releases/latest" 2>/dev/null)"; then
+                              latest_release="$(printf '%s' "$release_json" | jq -r '.tag_name // empty')"
                           fi
                       fi
 
