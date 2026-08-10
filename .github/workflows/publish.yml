@@ -124,12 +124,18 @@ jobs:
                           latest_release='v0.0.0'
                       fi
                   fi
-                  version="$(
-                      mise run --quiet publish:version \
-                          --ref-type "$REF_TYPE" \
-                          --ref-name "$REF_NAME" \
-                          --latest-release "$latest_release"
-                  )"
+                  if ! version="$(mise run --quiet publish:version \
+                      --ref-type "$REF_TYPE" \
+                      --ref-name "$REF_NAME" \
+                      --latest-release "$latest_release")"; then
+                      if [ "$REF_TYPE:$REF_NAME" = "branch:main" ]; then
+                          version="0.1.0-SNAPSHOT"
+                          echo "Warning: publish:version failed for main branch; using fallback $version." >&2
+                      else
+                          echo "Error: failed to resolve publish version for $REF_TYPE:$REF_NAME" >&2
+                          exit 1
+                      fi
+                  fi
                   echo "spatial_k_version=$version" >> "$GITHUB_OUTPUT"
                   echo "latest_release=$latest_release" >> "$GITHUB_OUTPUT"
     publish-maven:
