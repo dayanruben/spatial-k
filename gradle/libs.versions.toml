@@ -7,11 +7,11 @@ kotlinx-kover = "0.9.9"
 kotlinx-serialization = "1.11.0"
 kotlinx-io = "0.9.1"
 kotlinx-datetime = "0.8.0"
-kotlin-wrappers = "2026.8.3"
+kotlin-wrappers = "2026.9.2"
 vanniktech-publish = "0.37.0"
 dokka = "2.2.0"
 detekt = "2.0.0-alpha.6"
-xmlutil = "1.0.2"
+xmlutil = "1.0.2.1"
 
 [libraries]
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
