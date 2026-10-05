@@ -2,6 +2,7 @@ package org.maplibre.spatialk.units
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import org.maplibre.spatialk.testutil.assertBearingEquals
 import org.maplibre.spatialk.testutil.assertRotationEquals
 import org.maplibre.spatialk.units.Bearing.Companion.East
@@ -11,7 +12,7 @@ import org.maplibre.spatialk.units.Bearing.Companion.South
 import org.maplibre.spatialk.units.Bearing.Companion.Southeast
 import org.maplibre.spatialk.units.Bearing.Companion.Southwest
 import org.maplibre.spatialk.units.Bearing.Companion.West
-import org.maplibre.spatialk.units.DMS.Degrees
+import org.maplibre.spatialk.units.Units.Degrees
 import org.maplibre.spatialk.units.extensions.arcMinutes
 import org.maplibre.spatialk.units.extensions.arcSeconds
 import org.maplibre.spatialk.units.extensions.degrees
@@ -46,6 +47,21 @@ class BearingTest {
         assertBearingEquals(Northeast, East - 405.degrees)
         assertBearingEquals(North, North + 360.degrees)
         assertBearingEquals(North, North + 720.degrees)
+    }
+
+    @Test
+    fun testTinyNegativeRotationNormalizesToNorth() {
+        assertEquals(North, North - 1e-15.degrees)
+        assertEquals(North, North + (-0.0).degrees)
+    }
+
+    @Test
+    fun testNonFiniteRotationIsRejected() {
+        for (rotation in
+            listOf(Rotation.PositiveInfinity, Rotation.NegativeInfinity, Rotation.Zero / 0.0)) {
+            assertFailsWith<IllegalArgumentException> { North + rotation }
+            assertFailsWith<IllegalArgumentException> { North - rotation }
+        }
     }
 
     @Test
@@ -98,6 +114,12 @@ class BearingTest {
         assertEquals("S 10.00° E", (North + 170.degrees).toString())
         assertEquals("S 10.00° W", (South + 10.degrees).toString())
         assertEquals("N 10.00° W", (North - 10.degrees).toString())
+    }
+
+    @Test
+    fun testDmsRoundingCarriesInQuadrantBearings() {
+        val almostEast = North + 89.degrees + 59.arcMinutes + 59.999.arcSeconds
+        assertEquals("N 90° 0′ 0.00″ E", almostEast.toDmsString())
     }
 
     @Test

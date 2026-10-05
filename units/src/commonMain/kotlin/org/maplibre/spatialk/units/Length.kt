@@ -6,8 +6,8 @@ import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 import kotlinx.serialization.Serializable
-import org.maplibre.spatialk.units.International.Meters
-import org.maplibre.spatialk.units.International.SquareMeters
+import org.maplibre.spatialk.units.Units.Meters
+import org.maplibre.spatialk.units.Units.SquareMeters
 
 /**
  * Represents a length or distance, internally stored as a [Double] of meters.
@@ -29,12 +29,11 @@ public value class Length private constructor(private val valueInMeters: Double)
 
     /** Returns `true` if this length is infinite (positive or negative). */
     public val isInfinite: Boolean
-        get() =
-            valueInMeters == Double.POSITIVE_INFINITY || valueInMeters == Double.POSITIVE_INFINITY
+        get() = valueInMeters.isInfinite()
 
-    /** Returns `true` if this length is finite (not infinite). */
+    /** Returns `true` if this length is finite (neither infinite nor NaN). */
     public val isFinite: Boolean
-        get() = !isInfinite
+        get() = valueInMeters.isFinite()
 
     /** Returns `true` if this length is greater than zero. */
     public val isPositive: Boolean
@@ -98,7 +97,7 @@ public value class Length private constructor(private val valueInMeters: Double)
      * Returns a formatted string representation of this length.
      *
      * @param unit The unit to display the length in.
-     * @param decimalPlaces The number of decimal places to display.
+     * @param decimalPlaces The number of decimal places to round to; see [UnitOfMeasure.format].
      */
     public fun toString(unit: LengthUnit = Meters, decimalPlaces: Int = 2): String =
         unit.format(toDouble(unit), decimalPlaces)

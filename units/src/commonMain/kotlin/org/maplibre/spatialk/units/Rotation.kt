@@ -6,18 +6,18 @@ import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 import kotlinx.serialization.Serializable
-import org.maplibre.spatialk.units.DMS.ArcMinutes
-import org.maplibre.spatialk.units.DMS.ArcSeconds
-import org.maplibre.spatialk.units.DMS.Degrees
-import org.maplibre.spatialk.units.International.Radians
+import org.maplibre.spatialk.units.Units.ArcMinutes
+import org.maplibre.spatialk.units.Units.ArcSeconds
+import org.maplibre.spatialk.units.Units.Degrees
+import org.maplibre.spatialk.units.Units.Radians
 import org.maplibre.spatialk.units.extensions.*
 
 /**
  * Represents a magnitude of angular displacement, internally stored as a [Double] of degrees. It
  * may be greater than a full turn (360 degrees).
  *
- * This representation does not define whether positive rotations are clockwise or anticlockwise, as
- * that depends on axis of rotation (and the observer's frame of reference in space).
+ * The clockwise or anticlockwise interpretation of positive rotations depends on the axis of
+ * rotation and the observer's frame of reference.
  *
  * Most arithmetic operations are supported, and will automatically result in a [Rotation] or
  * [Bearing] depending on the operation.
@@ -36,12 +36,11 @@ public value class Rotation private constructor(private val valueInDegrees: Doub
 
     /** Returns `true` if this rotation is infinite (positive or negative). */
     public val isInfinite: Boolean
-        get() =
-            valueInDegrees == Double.POSITIVE_INFINITY || valueInDegrees == Double.NEGATIVE_INFINITY
+        get() = valueInDegrees.isInfinite()
 
-    /** Returns `true` if this rotation is finite (not infinite). */
+    /** Returns `true` if this rotation is finite (neither infinite nor NaN). */
     public val isFinite: Boolean
-        get() = !isInfinite
+        get() = valueInDegrees.isFinite()
 
     /** Returns `true` if this rotation is greater than zero. */
     public val isPositive: Boolean
@@ -107,31 +106,21 @@ public value class Rotation private constructor(private val valueInDegrees: Doub
      * Returns a formatted string representation of this rotation.
      *
      * @param unit The unit to display the rotation in.
-     * @param decimalPlaces The number of decimal places to display.
+     * @param decimalPlaces The number of decimal places to round to; see [UnitOfMeasure.format].
      */
     public fun toString(unit: RotationUnit = Radians, decimalPlaces: Int = 2): String =
         unit.format(toDouble(unit), decimalPlaces)
 
     /**
-     * Format this [Rotation] as [Degrees], [ArcMinutes], and [ArcSeconds] components.
+     * Format this [Rotation] as [Degrees], [ArcMinutes], and [ArcSeconds] components. A nonfinite
+     * rotation is written in degrees only, such as `NaN°` or `-Infinity°`.
      *
-     * @param decimalPlaces the number of decimal places to use for the arc seconds component.
+     * @param decimalPlaces The number of decimal places for arcseconds, as described in
+     *   [UnitOfMeasure.format].
+     * @see RotationFormat.Dms
      */
-    public fun toDmsString(decimalPlaces: Int = 2): String {
-        val isNegative = this.isNegative
-        val absolute = this.absoluteValue
-
-        val degreesPart = absolute.inDegrees.toInt()
-        var remainder = absolute - degreesPart.degrees
-        val minutesPart = remainder.inArcMinutes.toInt()
-        remainder -= minutesPart.arcMinutes
-        val secondsPart = remainder.inArcSeconds
-
-        val sign = if (isNegative) "-" else ""
-        return "${sign}${degreesPart}${Degrees.symbol} " +
-            "${minutesPart}${ArcMinutes.symbol} " +
-            "${secondsPart.toRoundedString(decimalPlaces)}${ArcSeconds.symbol}"
-    }
+    public fun toDmsString(decimalPlaces: Int = 2): String =
+        RotationFormat.Dms.format(this, Degrees, decimalPlaces)
 
     override fun compareTo(other: Rotation): Int = valueInDegrees.compareTo(other.valueInDegrees)
 
