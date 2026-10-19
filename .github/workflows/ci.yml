@@ -28,7 +28,7 @@ jobs:
                   persist-credentials: false
             - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
               with:
-                  version: 2026.6.0
+                  version: 2026.10.12
             - run: ./gradlew version # TODO: remove this once we're confident in our config
             - run: ./gradlew "${{ matrix.task }}"
             - if: ${{ matrix.task == 'macosArm64Test' }}
@@ -47,7 +47,7 @@ jobs:
                   persist-credentials: false
             - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
               with:
-                  version: 2026.6.0
+                  version: 2026.10.12
             - name: Run benchmark
               run: |
                   echo '## Benchmark' >> "$GITHUB_STEP_SUMMARY"
@@ -61,7 +61,7 @@ jobs:
                   persist-credentials: false
             - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
               with:
-                  version: 2026.6.0
+                  version: 2026.10.12
             - run: mise run docs:build --version dev
 
     check-format:
@@ -72,7 +72,7 @@ jobs:
                   persist-credentials: false
             - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
               with:
-                  version: 2026.6.0
+                  version: 2026.10.12
             - run: mise run check
 
     check-integrity:
@@ -83,7 +83,7 @@ jobs:
                   persist-credentials: false
             - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
               with:
-                  version: 2026.6.0
+                  version: 2026.10.12
             - name: Verify gradle wrapper
               run: |
                   GRADLE_VERSION=$(grep distributionUrl gradle/wrapper/gradle-wrapper.properties \
